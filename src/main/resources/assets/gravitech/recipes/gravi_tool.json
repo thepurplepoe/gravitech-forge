@@ -1,0 +1,42 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"PHP", 
+		"AEA", 
+		"WCT"
+	],
+	"key": {
+		"P": {
+			"item": "ic2:crafting",
+			"data": 15
+		},
+		"H": {
+			"item": "ic2:electric_hoe",
+	      	"data": 32767
+		},
+		"W": {
+			"item": "ic2:electric_wrench",
+	      	"data": 32767
+		},
+		"C": {
+			"type": "forge:ore_dict",
+			"ore": "circuitAdvanced"
+		},
+		"T": {
+			"item": "ic2:electric_treetap",
+	      	"data": 32767
+		},
+		"A": {
+			"item": "ic2:crafting",
+			"data": 3
+		},
+		"E": {
+			"item": "ic2:energy_crystal",
+	      	"data": 32767
+		}
+	},
+	"result": {
+		"item": "gravitech:graviTool",
+	    "data": 32767
+	}
+}

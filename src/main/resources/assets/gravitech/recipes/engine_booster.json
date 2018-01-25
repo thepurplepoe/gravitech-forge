@@ -1,0 +1,32 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GAG", 
+		"COC", 
+		"AVA"
+	],
+	"key": {
+		"V": {
+			"item": "ic2:advanced_heat_vent"
+		},
+		"O": {
+			"item": "ic2:upgrade",
+			"data": 0
+		},
+		"G": {
+			"item": "minecraft:glowstone_dust"
+		},
+		"C": {
+			"type": "forge:ore_dict",
+			"ore": "circuitAdvanced"
+		},
+		"A": {
+			"item": "ic2:crafting",
+			"data": 3
+		}
+	},
+	"result": {
+		"item": "gravitech:crafting",
+		"data": 6
+	}
+}

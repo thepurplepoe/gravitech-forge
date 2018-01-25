@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  net.minecraftforge.common.config.Configuration
- *  net.minecraftforge.common.config.Property
- *  org.apache.logging.log4j.Logger
- */
 package thepurplepoe.gravitech;
 
 import java.io.File;

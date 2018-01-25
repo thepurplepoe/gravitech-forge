@@ -1,0 +1,34 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" M ", 
+		"PTP", 
+		"SHS"
+	],
+	"key": {
+		"M": {
+			"item": "gravitech:crafting",
+			"data": 4
+		},
+		"P": {
+			"item": "ic2:crafting",
+			"data": 4
+		},
+		"T": {
+			"item": "ic2:te",
+			"data": 41
+		},
+		"S": {
+			"item": "gravitech:crafting",
+			"data": 1
+		},
+		"H": {
+			"item": "ic2:te",
+			"data": 79
+		}
+	},
+	"result": {
+		"item": "gravitech:crafting",
+		"data": 5
+	}
+}

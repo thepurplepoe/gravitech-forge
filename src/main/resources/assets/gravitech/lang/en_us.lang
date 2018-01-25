@@ -1,0 +1,83 @@
+gravitech.ultimateLappack=Ultimate Lappack
+gravitech.advancedLappack=Advanced Lappack
+
+gravitech.advancedJetpack=Advanced Electric Jetpack
+gravitech.advancedNanoChestplate=Advanced NanoChestplate
+gravitech.graviChestplate=GraviChestPlate
+
+gravitech.advancedDrill=Advanced Diamond Drill
+gravitech.advancedDrill.mode=Mode: %s
+gravitech.advancedDrill.normal=Normal
+gravitech.advancedDrill.lowPower=Low power
+gravitech.advancedDrill.fine=Fine
+gravitech.advancedDrill.bigHoles=Big holes
+gravitech.advancedDrill.ranOut=Not enough energy to complete this operation!
+
+gravitech.advancedChainsaw=Advanced Chainsaw
+gravitech.advancedChainsaw.shear=Shearing %s
+
+gravitech.graviTool=GraviTool
+gravitech.graviTool.set=%s (%s)
+gravitech.graviTool.changeTool=%s activated
+gravitech.graviTool.hoe=Hoe
+gravitech.graviTool.treetap=TreeTap
+gravitech.graviTool.wrench=Wrench
+gravitech.graviTool.screwdriver=Screwdriver
+gravitech.graviTool.noEnergy=Not enough energy to complete this operation!
+
+gravitech.vajra=Vajra
+gravitech.vajra.silkTouch=Silk touch mode %s
+gravitech.vajra.silkTouchDisabled=Can't change tool mode - accurate mode disabled in config file!
+
+gravitech.crafting.superconductor_cover=Superconductor Cover
+gravitech.crafting.superconductor=Superconductor
+gravitech.crafting.cooling_core=Cooling Core
+gravitech.crafting.gravitation_engine=Gravitation Engine
+gravitech.crafting.magnetron=Magnetron
+gravitech.crafting.vajra_core=Vajra Core
+gravitech.crafting.engine_booster=Engine Booster
+
+
+gravitech.message.on=On
+gravitech.message.off=Off
+gravitech.message.energy=Energy level: %s
+gravitech.message.hover=(Hover mode)
+gravitech.message.jetpackEngine=Jetpack engine ON %s
+gravitech.message.jetpackSwitch=Jetpack engine switched %s
+
+
+message.text.energyLevel=Energy level
+message.text.enabled=enabled
+message.text.disabled=disabled
+
+message.text.powerSupply=Power supply
+message.graviChestPlate.gravitationEngine=Gravitation engine
+message.graviChestPlate.levitationMode=Levitation mode
+message.graviChestPlate.levitationMode.short=L
+message.graviChestPlate.lowEnergy=Not enough energy to run Gravitation engine !
+message.graviChestPlate.shutdown=Warning ! Your's energy cell is depleted ! Gravitation engine off
+message.graviChestPlate.noEnergyToBoost=Not enough energy to boost !
+message.hud.displayHud=Display HUD
+message.hud.location=HUD location
+message.hud.location.topLeft=TopLeft
+message.hud.location.topRight=TopRight
+message.hud.location.bottomLeft=BottomLeft
+message.hud.location.bottomRight=BottomRight
+
+block.relocatorPortal.name=RelocatorPortal
+item.relocator.name=Relocator
+item.relocator.gui.addPoint=ADD NEW POINT
+
+message.relocator.mode.personal=Personal
+message.relocator.mode.translocator=Translocator
+message.relocator.mode.portal=Portal
+message.relocator.defPoint=Default
+message.relocator.text.poindAdded=added to teleport list !
+message.relocator.text.pointExists=already exists in teleport list !
+message.relocator.text.memoryFull=Can't add point. Memory is full.
+message.relocator.text.cantSetPointPoint=Can't set default teleport point. Teleport point not found.
+message.relocator.text.noDefaultPoint=Default teleport point not set
+message.relocator.text.modeTranslocatorDisabled=Translocator mode disabled at server !
+message.relocator.text.modePortalDisabled=Portal mode disabled at server !
+message.relocator.text.messageToTarget=tried to teleport you !
+message.relocator.text.defaultPointSet=Default teleport point set to

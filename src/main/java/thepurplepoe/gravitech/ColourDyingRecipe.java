@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  net.minecraft.entity.passive.EntitySheep
- *  net.minecraft.init.Items
- *  net.minecraft.inventory.InventoryCrafting
- *  net.minecraft.item.EnumDyeColor
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.item.crafting.RecipesArmorDyes
- *  net.minecraft.world.World
- */
 package thepurplepoe.gravitech;
 
 import java.util.ArrayList;
@@ -65,7 +52,7 @@ extends RecipesArmorDyes {
                     return null;
                 }
                 armourStack = stack.copy();
-                armourStack.stackSize = 1;
+                armourStack.setCount(1);
                 if (!chestplate.hasColor(stack)) continue;
                 int oldColour = chestplate.getColor(armourStack);
                 float r = (float)(oldColour >> 16 & 255) / 255.0f;

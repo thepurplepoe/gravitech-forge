@@ -1,0 +1,26 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"   ",
+		"ODO",
+		"COC"
+	],
+	"key": {
+		"D": {
+	      	"item": "ic2:diamond_drill",
+	      	"data": 32767
+		},
+		"O": {
+			"item": "ic2:upgrade",
+			"data": 0
+		},
+		"C": {
+			"type": "forge:ore_dict",
+			"ore": "circuitAdvanced"
+		}
+	},
+	"result": {
+		"item": "gravitech:advancedDrill",
+	    "data": 32767
+	}
+}

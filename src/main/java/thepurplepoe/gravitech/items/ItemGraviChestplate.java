@@ -1,20 +1,3 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  ic2.api.item.ElectricItem
- *  ic2.api.item.IElectricItemManager
- *  ic2.core.IC2
- *  ic2.core.util.Keyboard
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.inventory.EntityEquipmentSlot
- *  net.minecraft.item.EnumRarity
- *  net.minecraft.item.ItemStack
- *  net.minecraft.nbt.NBTBase
- *  net.minecraft.nbt.NBTTagCompound
- *  net.minecraft.world.World
- */
 package thepurplepoe.gravitech.items;
 
 import ic2.api.item.ElectricItem;
@@ -32,13 +15,13 @@ public class ItemGraviChestplate
 extends ItemAdvancedElectricJetpack {
     protected static final int DEFAULT_COLOUR = -1;
 
-    public ItemGraviChestplate() {
-        super("graviChestplate", 6.0E7, 100000.0, 4);
+    public ItemGraviChestplate(String name) {
+        super(name, 6.0E7, 100000.0, 4);
     }
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "gravisuite:textures/armour/" + this.name + (type != null ? "Overlay" : "") + ".png";
+        return "gravitech:textures/armour/" + this.name + (type != null ? "Overlay" : "") + ".png";
     }
 
     public void setColor(ItemStack stack, int colour) {
@@ -161,7 +144,7 @@ extends ItemAdvancedElectricJetpack {
 
     @Override
     public double getDamageAbsorptionRatio() {
-        return 1.1;
+        return 1.2;
     }
 
     @Override

@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CSC", 
+		"HPH", 
+		"CSC"
+	],
+	"key": {
+		"S": {
+			"item": "ic2:advanced_heat_exchanger"
+		},
+		"C": {
+			"item": "ic2:hex_heat_storage"
+		},
+		"H": {
+			"item": "ic2:heat_plating"
+		},
+		"P": {
+			"item": "ic2:crafting",
+			"data": 4
+		}
+	},
+	"result": {
+		"item": "gravitech:crafting",
+		"data": 2
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"APA", 
+		"CCC", 
+		"APA"
+	],
+	"key": {
+		"A": {
+			"item": "ic2:crafting",
+			"data": 3
+		},
+		"C": {
+			"item": "ic2:crafting",
+			"data": 15
+		},
+		"P": {
+			"item": "ic2:crafting",
+			"data": 4
+		}
+	},
+	"result": {
+		"item": "gravitech:crafting",
+		"data": 0
+	}
+}

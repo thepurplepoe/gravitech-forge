@@ -1,0 +1,26 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		" P ",
+		" C ",
+		" E "
+	],
+	"key": {
+		"P": {
+	      	"item": "ic2:energy_pack",
+	      	"data": 32767
+		},
+		"E": {
+			"item": "ic2:energy_crystal",
+	      	"data": 32767
+		},	
+		"C": {
+			"type": "forge:ore_dict",
+			"ore": "circuitAdvanced"
+		}
+	},
+	"result": {
+		"item": "gravitech:advancedLappack",
+	    "data": 32767
+	}
+}

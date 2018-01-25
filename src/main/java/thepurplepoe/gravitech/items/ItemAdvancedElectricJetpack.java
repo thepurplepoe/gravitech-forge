@@ -1,34 +1,3 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  com.google.common.base.CaseFormat
- *  ic2.api.item.ElectricItem
- *  ic2.api.item.IElectricItemManager
- *  ic2.core.IC2
- *  ic2.core.init.Localization
- *  ic2.core.item.armor.ItemArmorElectric
- *  ic2.core.item.armor.jetpack.IBoostingJetpack
- *  ic2.core.ref.ItemName
- *  ic2.core.util.Keyboard
- *  ic2.core.util.StackUtil
- *  net.minecraft.client.renderer.block.model.ModelResourceLocation
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.inventory.EntityEquipmentSlot
- *  net.minecraft.item.EnumRarity
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.nbt.NBTTagCompound
- *  net.minecraft.util.ResourceLocation
- *  net.minecraft.util.text.TextFormatting
- *  net.minecraft.world.World
- *  net.minecraftforge.client.model.ModelLoader
- *  net.minecraftforge.fml.common.registry.GameRegistry
- *  net.minecraftforge.fml.common.registry.IForgeRegistryEntry
- *  net.minecraftforge.fml.relauncher.Side
- *  net.minecraftforge.fml.relauncher.SideOnly
- */
 package thepurplepoe.gravitech.items;
 
 import com.google.common.base.CaseFormat;
@@ -48,14 +17,11 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import thepurplepoe.gravitech.GraviKeys;
 import thepurplepoe.gravitech.Gravitech;
 
@@ -63,6 +29,7 @@ public class ItemAdvancedElectricJetpack
 extends ItemArmorElectric
 implements IBoostingJetpack {
     protected final String name;
+	public String itemName;
 
     public ItemAdvancedElectricJetpack() {
         this("advancedJetpack");
@@ -75,23 +42,26 @@ implements IBoostingJetpack {
     protected ItemAdvancedElectricJetpack(String name, double maxCharge, double transferLimit, int tier) {
         super(null, null, EntityEquipmentSlot.CHEST, maxCharge, transferLimit, tier);
         this.name = name;
-        ((ItemAdvancedElectricJetpack)GameRegistry.register((IForgeRegistryEntry)this, (ResourceLocation)new ResourceLocation("Gravitech", this.name))).setUnlocalizedName(name);
+        itemName = name;
+        this.setRegistryName(name);
+        this.setUnlocalizedName(name);
         this.setMaxDamage(27);
         this.setMaxStackSize(1);
         this.setNoRepair();
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("Gravitech:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), null));
+    public void registerModels() {
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("gravitech:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), null));
     }
 
+    @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "Gravitech:textures/armour/" + this.name + ".png";
+        return "gravitech:textures/armour/" + this.name + ".png";
     }
 
     public String getUnlocalizedName() {
-        return "Gravitech." + super.getUnlocalizedName().substring(4);
+        return "gravitech." + super.getUnlocalizedName().substring(4);
     }
 
     public EnumRarity getRarity(ItemStack stack) {
@@ -120,8 +90,8 @@ implements IBoostingJetpack {
             toggleTimer = 10;
             nbt.setByte("toggleTimer", (byte)10);
             if (!world.isRemote) {
-                String mode = ItemAdvancedElectricJetpack.switchJetpack(stack) ? (Object)TextFormatting.DARK_GREEN + Localization.translate((String)"Gravitech.message.on") : (Object)TextFormatting.DARK_RED + Localization.translate((String)"Gravitech.message.off");
-                Gravitech.messagePlayer(player, "Gravitech.message.jetpackSwitch", TextFormatting.YELLOW, mode);
+                String mode = ItemAdvancedElectricJetpack.switchJetpack(stack) ? (Object)TextFormatting.DARK_GREEN + Localization.translate((String)"gravitech.message.on") : (Object)TextFormatting.DARK_RED + Localization.translate((String)"gravitech.message.off");
+                Gravitech.messagePlayer(player, "gravitech.message.jetpackSwitch", TextFormatting.YELLOW, mode);
             }
         }
         if (toggleTimer > 0 && !ItemAdvancedElectricJetpack.isJetpackOn(stack)) {

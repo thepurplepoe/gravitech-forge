@@ -1,0 +1,38 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"CJC", 
+		"CNC", 
+		"GAG"
+	],
+	"key": {
+		"J": {
+	      	"item": "gravitech:advancedJetpack",
+	      	"data": 32767
+		},
+		"N": {
+			"item": "ic2:nano_chestplate",
+	      	"data": 32767
+		},
+		"C": {
+			"item": "ic2:crafting",
+			"data": 15
+		},	
+		"A": {
+			"type": "forge:ore_dict",
+			"ore": "circuitAdvanced"
+		},
+		"G": {
+			"item": "ic2:cable",
+			"data": 1,
+			"dataType": {
+				"type": "1",
+				"insulation": "0"
+			}
+		}
+	},
+	"result": {
+		"item": "gravitech:advancedNanoChestplate",
+	    "data": 32767
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"ICI", 
+		"CSC", 
+		"ICI"
+	],
+	"key": {
+		"I": {
+			"item": "ic2:plate",
+			"data": 3
+		},
+		"C": {
+			"item": "ic2:plate",
+			"data": 1
+		},
+		"S": {
+			"item": "gravitech:crafting",
+			"data": 1
+		}
+	},
+	"result": {
+		"item": "gravitech:crafting",
+		"data": 4
+	}
+}

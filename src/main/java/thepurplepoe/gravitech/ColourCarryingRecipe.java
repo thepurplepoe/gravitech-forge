@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  ic2.core.item.armor.ItemArmorQuantumSuit
- *  ic2.core.recipe.AdvRecipe
- *  net.minecraft.inventory.InventoryCrafting
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemArmor
- *  net.minecraft.item.ItemStack
- *  net.minecraft.item.crafting.IRecipe
- *  net.minecraftforge.fml.common.registry.GameRegistry
- */
 package thepurplepoe.gravitech;
 
 import ic2.core.item.armor.ItemArmorQuantumSuit;
@@ -28,10 +15,11 @@ extends AdvRecipe {
     }
 
     public void add() {
-        GameRegistry.addRecipe((IRecipe)this);
+        //GameRegistry.addRecipe((IRecipe)this);
     }
 
     public ItemStack getCraftingResult(InventoryCrafting craftingInv) {
+    	/*
         ItemStack initialResult = super.getCraftingResult(craftingInv);
         if (initialResult != null && initialResult.getItem() instanceof ItemArmor) {
             int colour = -1;
@@ -46,6 +34,8 @@ extends AdvRecipe {
             }
         }
         return initialResult;
+        */
+    	return ItemStack.EMPTY;
     }
 }
 

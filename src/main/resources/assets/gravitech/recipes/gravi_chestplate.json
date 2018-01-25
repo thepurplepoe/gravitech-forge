@@ -1,0 +1,34 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SAS", 
+		"DBD", 
+		"SCS"
+	],
+	"key": {
+		"S": {
+			"item": "gravitech:crafting",
+			"data": 1
+		},
+		"D": {
+			"item": "gravitech:crafting",
+			"data": 3
+		},
+		"C": {
+			"item": "gravitech:ultimateLappack",
+	      	"data": 32767
+		},
+		"A": {
+			"item": "ic2:quantum_chestplate",
+	      	"data": 32767
+		},
+		"B": {
+			"item": "ic2:te",
+			"data": 79
+		}
+	},
+	"result": {
+		"item": "gravitech:graviChestplate",
+	    "data": 32767
+	}
+}

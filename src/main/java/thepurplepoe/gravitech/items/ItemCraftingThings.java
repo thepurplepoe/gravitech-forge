@@ -1,19 +1,3 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  ic2.core.block.state.IIdProvider
- *  ic2.core.item.ItemMulti
- *  ic2.core.ref.ItemName
- *  net.minecraft.client.renderer.block.model.ModelResourceLocation
- *  net.minecraft.item.Item
- *  net.minecraft.util.ResourceLocation
- *  net.minecraftforge.client.model.ModelLoader
- *  net.minecraftforge.fml.common.registry.GameRegistry
- *  net.minecraftforge.fml.common.registry.IForgeRegistryEntry
- *  net.minecraftforge.fml.relauncher.Side
- *  net.minecraftforge.fml.relauncher.SideOnly
- */
 package thepurplepoe.gravitech.items;
 
 import java.util.Locale;
@@ -37,16 +21,18 @@ extends ItemMulti<CraftingTypes> {
 
     public ItemCraftingThings() {
         super(null, CraftingTypes.class);
-        ((ItemCraftingThings)GameRegistry.register((IForgeRegistryEntry)this, (ResourceLocation)new ResourceLocation("gravisuite", "crafting"))).setUnlocalizedName("crafting");
+        this.setRegistryName(NAME);
+        this.setUnlocalizedName(NAME);
+        
     }
 
     @SideOnly(value=Side.CLIENT)
-    protected void registerModel(int meta, ItemName name, String extraName) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)meta, (ModelResourceLocation)new ModelResourceLocation("gravisuite:crafting/" + CraftingTypes.getFromID(meta).getName(), null));
+    public void registerModels(int meta) {
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)meta, (ModelResourceLocation)new ModelResourceLocation("gravitech:crafting/" + CraftingTypes.getFromID(meta).getName(), null));
     }
 
     public String getUnlocalizedName() {
-        return "gravisuite." + super.getUnlocalizedName().substring(4);
+        return "gravitech." + super.getUnlocalizedName().substring(4);
     }
 
     public static enum CraftingTypes implements IIdProvider

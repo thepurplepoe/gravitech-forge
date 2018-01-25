@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CPC", 
+		"CLC", 
+		"CSC"
+	],
+	"key": {
+		"C": {
+			"item": "ic2:lapotron_crystal",
+	      	"data": 32767
+		},
+		"P": {
+			"item": "ic2:crafting",
+			"data": 4
+		},
+		"S": {
+			"item": "gravitech:crafting",
+			"data": 1
+		},
+		"L": {
+			"item": "gravitech:advancedLappack",
+	      	"data": 32767
+		}
+	},
+	"result": {
+		"item": "gravitech:ultimateLappack",
+	    "data": 32767
+	}
+}

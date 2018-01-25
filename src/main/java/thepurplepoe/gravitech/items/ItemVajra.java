@@ -1,68 +1,20 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  ic2.api.item.ElectricItem
- *  ic2.api.item.IElectricItemManager
- *  ic2.core.IC2
- *  ic2.core.init.Localization
- *  ic2.core.item.tool.ItemElectricTool
- *  ic2.core.item.tool.ItemElectricTool$HarvestLevel
- *  ic2.core.item.tool.ItemElectricTool$ToolClass
- *  ic2.core.ref.ItemName
- *  ic2.core.util.Keyboard
- *  ic2.core.util.StackUtil
- *  net.minecraft.block.Block
- *  net.minecraft.block.state.IBlockState
- *  net.minecraft.client.renderer.block.model.ModelResourceLocation
- *  net.minecraft.enchantment.Enchantment
- *  net.minecraft.enchantment.EnchantmentHelper
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.entity.player.EntityPlayerMP
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.Enchantments
- *  net.minecraft.item.EnumRarity
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.nbt.NBTTagCompound
- *  net.minecraft.network.NetHandlerPlayServer
- *  net.minecraft.network.Packet
- *  net.minecraft.network.play.server.SPacketBlockChange
- *  net.minecraft.server.management.PlayerInteractionManager
- *  net.minecraft.tileentity.TileEntity
- *  net.minecraft.util.ActionResult
- *  net.minecraft.util.DamageSource
- *  net.minecraft.util.EnumActionResult
- *  net.minecraft.util.EnumHand
- *  net.minecraft.util.ResourceLocation
- *  net.minecraft.util.math.BlockPos
- *  net.minecraft.util.text.TextFormatting
- *  net.minecraft.world.GameType
- *  net.minecraft.world.IBlockAccess
- *  net.minecraft.world.World
- *  net.minecraftforge.client.model.ModelLoader
- *  net.minecraftforge.common.ForgeHooks
- *  net.minecraftforge.fml.common.registry.GameRegistry
- *  net.minecraftforge.fml.common.registry.IForgeRegistryEntry
- *  net.minecraftforge.fml.relauncher.Side
- *  net.minecraftforge.fml.relauncher.SideOnly
- */
 package thepurplepoe.gravitech.items;
 
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.init.Localization;
 import ic2.core.item.tool.ItemElectricTool;
-import ic2.core.ref.ItemName;
 import ic2.core.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,7 +31,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
@@ -87,60 +38,62 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import thepurplepoe.gravitech.Gravitech;
 
 public class ItemVajra
 extends ItemElectricTool {
     protected static final String NAME = "vajra";
+    public String itemName;
     public static boolean accurateEnabled = true;
 
-    public ItemVajra() {
+    public ItemVajra(String name) {
         super(null, 3333, ItemElectricTool.HarvestLevel.Iridium, EnumSet.of(ItemElectricTool.ToolClass.Pickaxe, ItemElectricTool.ToolClass.Shovel, ItemElectricTool.ToolClass.Axe));
-        ((ItemVajra)GameRegistry.register((IForgeRegistryEntry)this, (ResourceLocation)new ResourceLocation("Gravitech", "vajra"))).setUnlocalizedName("vajra");
+        itemName = name;
         this.maxCharge = 10000000;
         this.transferLimit = 60000;
         this.tier = 3;
-        this.efficiencyOnProperMaterial = 20000.0f;
+        this.efficiency = 20000.0f;
+        this.setRegistryName(name);
+        this.setUnlocalizedName(name);
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("Gravitech:vajra", null));
+    public void registerModels() {
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("gravitech:vajra", null));
     }
 
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-        super.addInformation(stack, player, tooltip, advanced);
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    	super.addInformation(stack, worldIn, tooltip, flagIn);
         if (StackUtil.getOrCreateNbtData((ItemStack)stack).getBoolean("accurate")) {
-            tooltip.add((Object)TextFormatting.GOLD + Localization.translate((String)"Gravitech.vajra.silkTouch", (Object[])new Object[]{new StringBuilder().append((Object)TextFormatting.DARK_GREEN).append(Localization.translate((String)"Gravitech.message.on")).toString()}));
+            tooltip.add((Object)TextFormatting.GOLD + Localization.translate((String)"gravitech.vajra.silkTouch", (Object[])new Object[]{new StringBuilder().append((Object)TextFormatting.DARK_GREEN).append(Localization.translate((String)"gravitech.message.on")).toString()}));
         } else {
-            tooltip.add((Object)TextFormatting.GOLD + Localization.translate((String)"Gravitech.vajra.silkTouch", (Object[])new Object[]{new StringBuilder().append((Object)TextFormatting.DARK_RED).append(Localization.translate((String)"Gravitech.message.off")).toString()}));
+            tooltip.add((Object)TextFormatting.GOLD + Localization.translate((String)"gravitech.vajra.silkTouch", (Object[])new Object[]{new StringBuilder().append((Object)TextFormatting.DARK_RED).append(Localization.translate((String)"gravitech.message.off")).toString()}));
         }
     }
 
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-        if (!world.isRemote && IC2.keyboard.isModeSwitchKeyDown(player)) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        if (!worldIn.isRemote && IC2.keyboard.isModeSwitchKeyDown(playerIn)) {
+        	ItemStack stack = playerIn.getHeldItem(handIn);
             NBTTagCompound nbt = StackUtil.getOrCreateNbtData((ItemStack)stack);
             if (nbt.getBoolean("accurate")) {
                 nbt.setBoolean("accurate", false);
-                Gravitech.messagePlayer(player, "Gravitech.vajra.silkTouch", TextFormatting.DARK_RED, Localization.translate((String)"Gravitech.message.off"));
+                Gravitech.messagePlayer(playerIn, "gravitech.vajra.silkTouch", TextFormatting.DARK_RED, Localization.translate((String)"gravitech.message.off"));
             } else if (accurateEnabled) {
                 nbt.setBoolean("accurate", true);
-                Gravitech.messagePlayer(player, "Gravitech.vajra.silkTouch", TextFormatting.DARK_GREEN, Localization.translate((String)"Gravitech.message.on"));
+                Gravitech.messagePlayer(playerIn, "gravitech.vajra.silkTouch", TextFormatting.DARK_GREEN, Localization.translate((String)"gravitech.message.on"));
             } else {
-                Gravitech.messagePlayer(player, "Gravitech.vajra.silkTouchDisabled", TextFormatting.DARK_RED, new Object[0]);
+                Gravitech.messagePlayer(playerIn, "gravitech.vajra.silkTouchDisabled", TextFormatting.DARK_RED, new Object[0]);
             }
-            return new ActionResult(EnumActionResult.SUCCESS, (Object)stack);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
         }
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
     public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
         if (accurateEnabled && StackUtil.getOrCreateNbtData((ItemStack)stack).getBoolean("accurate")) {
-            World world = player.worldObj;
+            World world = player.world;
             if (!world.isRemote && ElectricItem.manager.canUse(stack, this.operationEnergyCost)) {
                 stack.addEnchantment(Enchantments.SILK_TOUCH, 10);
                 IBlockState state = world.getBlockState(pos);
@@ -213,7 +166,7 @@ extends ItemElectricTool {
     }
 
     public String getUnlocalizedName() {
-        return "Gravitech." + super.getUnlocalizedName().substring(4);
+        return "gravitech." + super.getUnlocalizedName().substring(4);
     }
 
     public EnumRarity getRarity(ItemStack stack) {

@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SSS", 
+		"CGC", 
+		"SSS"
+	],
+	"key": {
+		"S": {
+			"item": "gravitech:crafting",
+			"data": 0
+		},
+		"C": {
+			"item": "ic2:cable",
+			"data": 1,
+			"dataType": {
+				"type": "1",
+				"insulation": "0"
+			}
+		},
+		"G": {
+			"item": "minecraft:gold_ingot"
+		}
+	},
+	"result": {
+		"item": "gravitech:crafting",
+		"data": 1
+	}
+}

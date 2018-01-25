@@ -1,0 +1,38 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"PEP", 
+		"CVC", 
+		"ALA"
+	],
+	"key": {
+		"P": {
+			"item": "ic2:plate",
+			"data": 3
+		},
+		"E": {
+			"item": "ic2:energy_crystal",
+	      	"data": 32767
+		},
+		"C": {
+			"item": "ic2:crafting",
+			"data": 15
+		},
+		"V": {
+			"item": "gravitech:crafting",
+			"data": 5
+		},
+		"A": {
+			"item": "ic2:crafting",
+			"data": 3
+		},
+		"L": {
+			"item": "ic2:lapotron_crystal",
+	      	"data": 32767
+		}
+	},
+	"result": {
+		"item": "gravitech:vajra",
+	    "data": 32767
+	}
+}

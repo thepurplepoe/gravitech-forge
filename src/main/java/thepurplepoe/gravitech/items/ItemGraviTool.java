@@ -1,89 +1,3 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.HashMultimap
- *  com.google.common.collect.Multimap
- *  com.mojang.authlib.GameProfile
- *  ic2.api.item.ElectricItem
- *  ic2.api.item.IElectricItem
- *  ic2.api.item.IElectricItemManager
- *  ic2.api.tile.IWrenchable
- *  ic2.core.CreativeTabIC2
- *  ic2.core.IC2
- *  ic2.core.Platform
- *  ic2.core.audio.AudioManager
- *  ic2.core.audio.PositionSpec
- *  ic2.core.block.TileEntityBarrel
- *  ic2.core.init.Localization
- *  ic2.core.init.MainConfig
- *  ic2.core.item.ElectricItemManager
- *  ic2.core.item.tool.ItemTreetap
- *  ic2.core.ref.BlockName
- *  ic2.core.ref.IItemModelProvider
- *  ic2.core.ref.ItemName
- *  ic2.core.util.Config
- *  ic2.core.util.ConfigUtil
- *  ic2.core.util.Keyboard
- *  ic2.core.util.Log
- *  ic2.core.util.LogCategory
- *  ic2.core.util.StackUtil
- *  ic2.core.util.Util
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockDirt
- *  net.minecraft.block.BlockDirt$DirtType
- *  net.minecraft.block.BlockGrass
- *  net.minecraft.block.BlockHorizontal
- *  net.minecraft.block.properties.IProperty
- *  net.minecraft.block.properties.PropertyDirection
- *  net.minecraft.block.properties.PropertyEnum
- *  net.minecraft.block.state.IBlockState
- *  net.minecraft.client.renderer.ItemMeshDefinition
- *  net.minecraft.client.renderer.block.model.ModelBakery
- *  net.minecraft.client.renderer.block.model.ModelResourceLocation
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.entity.EntityLivingBase
- *  net.minecraft.entity.ai.attributes.AttributeModifier
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.entity.player.EntityPlayerMP
- *  net.minecraft.entity.player.PlayerCapabilities
- *  net.minecraft.init.Blocks
- *  net.minecraft.init.SoundEvents
- *  net.minecraft.inventory.EntityEquipmentSlot
- *  net.minecraft.item.EnumRarity
- *  net.minecraft.item.Item
- *  net.minecraft.item.Item$ToolMaterial
- *  net.minecraft.item.ItemStack
- *  net.minecraft.item.ItemTool
- *  net.minecraft.nbt.NBTTagCompound
- *  net.minecraft.server.management.PlayerInteractionManager
- *  net.minecraft.tileentity.TileEntity
- *  net.minecraft.util.ActionResult
- *  net.minecraft.util.EnumActionResult
- *  net.minecraft.util.EnumFacing
- *  net.minecraft.util.EnumFacing$Axis
- *  net.minecraft.util.EnumFacing$AxisDirection
- *  net.minecraft.util.EnumHand
- *  net.minecraft.util.ResourceLocation
- *  net.minecraft.util.SoundCategory
- *  net.minecraft.util.SoundEvent
- *  net.minecraft.util.math.BlockPos
- *  net.minecraft.util.text.TextFormatting
- *  net.minecraft.world.GameType
- *  net.minecraft.world.IBlockAccess
- *  net.minecraft.world.World
- *  net.minecraftforge.client.model.ModelLoader
- *  net.minecraftforge.common.ForgeHooks
- *  net.minecraftforge.common.MinecraftForge
- *  net.minecraftforge.event.entity.player.UseHoeEvent
- *  net.minecraftforge.fml.common.eventhandler.Event
- *  net.minecraftforge.fml.common.eventhandler.Event$Result
- *  net.minecraftforge.fml.common.eventhandler.EventBus
- *  net.minecraftforge.fml.common.registry.GameRegistry
- *  net.minecraftforge.fml.common.registry.IForgeRegistryEntry
- *  net.minecraftforge.fml.relauncher.Side
- *  net.minecraftforge.fml.relauncher.SideOnly
- */
 package thepurplepoe.gravitech.items;
 
 import java.util.Collections;
@@ -104,8 +18,6 @@ import ic2.core.init.MainConfig;
 import ic2.core.item.ElectricItemManager;
 import ic2.core.item.tool.ItemTreetap;
 import ic2.core.ref.BlockName;
-import ic2.core.ref.IItemModelProvider;
-import ic2.core.ref.ItemName;
 import ic2.core.util.Config;
 import ic2.core.util.ConfigUtil;
 import ic2.core.util.LogCategory;
@@ -148,32 +60,32 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import thepurplepoe.gravitech.Gravitech;
 
 public class ItemGraviTool
 extends ItemTool
-implements IElectricItem,
-IItemModelProvider {
+implements IElectricItem {
     protected static final String NAME = "graviTool";
+    public String itemName;
     protected static final double ROTATE = 50.0;
     protected static final double HOE = 50.0;
     protected static final double TAP = 50.0;
     protected static final double SCREW = 500.0;
 
-    public ItemGraviTool() {
+    public ItemGraviTool(String name) {
         super(Item.ToolMaterial.IRON, Collections.emptySet());
-        ((ItemGraviTool)GameRegistry.register((IForgeRegistryEntry)this, (ResourceLocation)new ResourceLocation("Gravitech", "graviTool"))).setUnlocalizedName("graviTool");
+    	itemName = name;
         this.setMaxDamage(27);
         this.setCreativeTab((CreativeTabs)IC2.tabIC2);
-        this.efficiencyOnProperMaterial = 16.0f;
+        this.efficiency = 16.0f;
+        this.setRegistryName(name);
+        this.setUnlocalizedName(name);
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void registerModels(ItemName name) {
+    public void registerModels() {
         ModelLoader.setCustomMeshDefinition((Item)this, (ItemMeshDefinition)new ItemMeshDefinition(){
 
             public ModelResourceLocation getModelLocation(ItemStack stack) {
@@ -181,7 +93,7 @@ IItemModelProvider {
                 return mode.model;
             }
         });
-        for (GraviToolMode mode : VALUES) {
+        for (GraviToolMode mode : GraviToolMode.VALUES) {
             ModelBakery.registerItemVariants((Item)this, (ResourceLocation[])new ResourceLocation[]{mode.model});
         }
     }
@@ -208,7 +120,7 @@ IItemModelProvider {
     }
 
     public String getUnlocalizedName() {
-        return "Gravitech." + super.getUnlocalizedName().substring(5);
+        return "gravitech." + super.getUnlocalizedName().substring(5);
     }
 
     public String getUnlocalizedName(ItemStack stack) {
@@ -217,26 +129,28 @@ IItemModelProvider {
 
     public String getItemStackDisplayName(ItemStack stack) {
         if (ItemGraviTool.hasToolMode(stack)) {
-            return Localization.translate((String)"Gravitech.graviTool.set", (Object[])new Object[]{Localization.translate((String)this.getUnlocalizedName(stack)), Localization.translate((String)ItemGraviTool.readToolMode((ItemStack)stack).translationName)});
+            return Localization.translate((String)"gravitech.graviTool.set", (Object[])new Object[]{Localization.translate((String)this.getUnlocalizedName(stack)), Localization.translate((String)ItemGraviTool.readToolMode((ItemStack)stack).translationName)});
         }
         return Localization.translate((String)this.getUnlocalizedName(stack));
     }
 
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-        if (IC2.keyboard.isModeSwitchKeyDown(player)) {
-            if (world.isRemote) {
-                IC2.audioManager.playOnce((Object)player, PositionSpec.Hand, "Gravitech:toolChange.ogg", true, IC2.audioManager.getDefaultVolume());
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        if (IC2.keyboard.isModeSwitchKeyDown(playerIn)) {
+            if (worldIn.isRemote) {
+                IC2.audioManager.playOnce((Object)playerIn, PositionSpec.Hand, "gravitech:toolChange.ogg", true, IC2.audioManager.getDefaultVolume());
             } else {
+            	ItemStack stack = playerIn.getHeldItem(handIn);
                 GraviToolMode mode = ItemGraviTool.readNextToolMode(stack);
                 ItemGraviTool.saveToolMode(stack, mode);
-                Gravitech.messagePlayer(player, "Gravitech.graviTool.changeTool", mode.colour, mode.translationName);
+                Gravitech.messagePlayer(playerIn, "gravitech.graviTool.changeTool", mode.colour, mode.translationName);
             }
-            return new ActionResult(EnumActionResult.SUCCESS, (Object)stack);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
         }
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
-    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+    	ItemStack stack = player.getHeldItem(hand);
         switch (ItemGraviTool.readToolMode(stack)) {
             case WRENCH: {
                 return this.onWrenchUse(stack, player, world, pos, side) ? (world.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS) : EnumActionResult.FAIL;
@@ -244,22 +158,28 @@ IItemModelProvider {
             case SCREWDRIVER: {
                 return this.onScrewdriverUse(stack, player, world, pos) ? (world.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS) : EnumActionResult.FAIL;
             }
+		default:
+			break;
         }
-        return super.onItemUseFirst(stack, player, world, pos, side, hitX, hitY, hitZ, hand);
+        return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
     }
 
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    	ItemStack stack = player.getHeldItem(hand);
         switch (ItemGraviTool.readToolMode(stack)) {
             case HOE: {
-                return this.onHoeUse(stack, player, world, pos, facing) ? (world.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS) : EnumActionResult.FAIL;
+                return this.onHoeUse(stack, player, worldIn, pos, facing) ? (worldIn.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS) : EnumActionResult.FAIL;
             }
             case TREETAP: {
-                return this.onTreeTapUse(stack, player, world, pos, facing) ? (world.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS) : EnumActionResult.FAIL;
+                return this.onTreeTapUse(stack, player, worldIn, pos, facing) ? (worldIn.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS) : EnumActionResult.FAIL;
             }
+		default:
+			break;
         }
-        return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+        return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
     }
 
+    
     protected boolean onHoeUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side) {
         if (!player.canPlayerEdit(pos.offset(side), side, stack) || !ItemGraviTool.hasNecessaryPower(stack, HOE, player)) {
             return false;
@@ -290,6 +210,7 @@ IItemModelProvider {
         }
         return false;
     }
+    
 
     protected boolean setHoedBlock(ItemStack stack, EntityPlayer player, World world, BlockPos pos, IBlockState state) {
         if (ItemGraviTool.checkNecessaryPower(stack, HOE, player, true)) {
@@ -378,7 +299,7 @@ IItemModelProvider {
                         return false;
                     }
                     block.onBlockDestroyedByPlayer(world, pos, state);
-                    List drops = wrenchable.getWrenchDrops(world, pos, state, te, player, 0);
+                    List<ItemStack> drops = wrenchable.getWrenchDrops(world, pos, state, te, player, 0);
                     for (ItemStack drop : drops) {
                         StackUtil.dropAsEntity((World)world, (BlockPos)pos, (ItemStack)drop);
                     }
@@ -415,12 +336,12 @@ IItemModelProvider {
 
     protected static boolean checkNecessaryPower(ItemStack stack, double usage, EntityPlayer player, boolean supressSound) {
         if (ElectricItem.manager.use(stack, usage, (EntityLivingBase)player)) {
-            if (!supressSound && player.worldObj.isRemote) {
-                IC2.audioManager.playOnce((Object)player, PositionSpec.Hand, "Gravitech:wrench.ogg", true, IC2.audioManager.getDefaultVolume());
+            if (!supressSound && player.world.isRemote) {
+                IC2.audioManager.playOnce((Object)player, PositionSpec.Hand, "gravitech:wrench.ogg", true, IC2.audioManager.getDefaultVolume());
             }
             return true;
         }
-        IC2.platform.messagePlayer(player, Localization.translate((String)"Gravitech.graviTool.noEnergy"), new Object[0]);
+        IC2.platform.messagePlayer(player, Localization.translate((String)"gravitech.graviTool.noEnergy"), new Object[0]);
         return false;
     }
 
@@ -488,8 +409,8 @@ IItemModelProvider {
         private static final GraviToolMode[] VALUES;
 
         private GraviToolMode(TextFormatting colour) {
-            this.model = new ModelResourceLocation("Gravitech:" + "graviTool".toLowerCase(Locale.ENGLISH) + '/' + this.name().toLowerCase(Locale.ENGLISH), null);
-            this.translationName = "Gravitech.graviTool." + this.name().toLowerCase(Locale.ENGLISH);
+            this.model = new ModelResourceLocation("gravitech:" + "graviTool".toLowerCase(Locale.ENGLISH) + '/' + this.name().toLowerCase(Locale.ENGLISH), null);
+            this.translationName = "gravitech.graviTool." + this.name().toLowerCase(Locale.ENGLISH);
             this.colour = colour;
         }
 

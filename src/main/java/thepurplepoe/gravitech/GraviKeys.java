@@ -1,22 +1,3 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  ic2.core.IC2
- *  ic2.core.Platform
- *  ic2.core.util.Keyboard
- *  ic2.core.util.Keyboard$IKeyWatcher
- *  ic2.core.util.Keyboard$Key
- *  ic2.core.util.ReflectionUtil
- *  net.minecraft.client.settings.GameSettings
- *  net.minecraft.client.settings.KeyBinding
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraftforge.common.util.EnumHelper
- *  net.minecraftforge.fml.client.registry.ClientRegistry
- *  net.minecraftforge.fml.relauncher.Side
- *  net.minecraftforge.fml.relauncher.SideOnly
- *  org.apache.commons.lang3.ArrayUtils
- */
 package thepurplepoe.gravitech;
 
 import java.lang.reflect.Field;
@@ -92,7 +73,7 @@ extends Keyboard {
         private GraviKey(int keyID, String description) {
             this.key = this.addKey(this.name());
             if (IC2.platform.isRendering()) {
-                this.binding = new KeyBinding(description, keyID, "gravisuite".substring(0, 1).toUpperCase(Locale.ENGLISH) + "gravisuite".substring(1));
+                this.binding = new KeyBinding(description, keyID, "gravitech".substring(0, 1).toUpperCase(Locale.ENGLISH) + "gravitech".substring(1));
                 ClientRegistry.registerKeyBinding((KeyBinding)this.binding);
             }
         }

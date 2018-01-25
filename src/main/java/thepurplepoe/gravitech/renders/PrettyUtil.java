@@ -1,52 +1,3 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  ic2.core.ref.IItemModelProvider
- *  ic2.core.util.ReflectionUtil
- *  net.minecraft.block.Block
- *  net.minecraft.block.BlockChest
- *  net.minecraft.block.BlockEnderChest
- *  net.minecraft.block.BlockSign
- *  net.minecraft.block.BlockSkull
- *  net.minecraft.block.material.Material
- *  net.minecraft.block.state.IBlockState
- *  net.minecraft.client.Minecraft
- *  net.minecraft.client.multiplayer.PlayerControllerMP
- *  net.minecraft.client.renderer.BlockRendererDispatcher
- *  net.minecraft.client.renderer.GlStateManager
- *  net.minecraft.client.renderer.RenderGlobal
- *  net.minecraft.client.renderer.Tessellator
- *  net.minecraft.client.renderer.VertexBuffer
- *  net.minecraft.client.renderer.texture.TextureAtlasSprite
- *  net.minecraft.client.renderer.texture.TextureManager
- *  net.minecraft.client.renderer.texture.TextureMap
- *  net.minecraft.client.renderer.vertex.DefaultVertexFormats
- *  net.minecraft.client.renderer.vertex.VertexFormat
- *  net.minecraft.client.resources.IReloadableResourceManager
- *  net.minecraft.client.resources.IResourceManager
- *  net.minecraft.client.resources.IResourceManagerReloadListener
- *  net.minecraft.entity.Entity
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.tileentity.TileEntity
- *  net.minecraft.util.EnumFacing
- *  net.minecraft.util.EnumHand
- *  net.minecraft.util.ResourceLocation
- *  net.minecraft.util.math.BlockPos
- *  net.minecraft.util.math.RayTraceResult
- *  net.minecraft.util.math.RayTraceResult$Type
- *  net.minecraft.util.math.Vec3d
- *  net.minecraft.world.IBlockAccess
- *  net.minecraft.world.World
- *  net.minecraftforge.client.event.DrawBlockHighlightEvent
- *  net.minecraftforge.common.MinecraftForge
- *  net.minecraftforge.fml.common.eventhandler.EventBus
- *  net.minecraftforge.fml.common.eventhandler.SubscribeEvent
- *  net.minecraftforge.fml.relauncher.Side
- *  net.minecraftforge.fml.relauncher.SideOnly
- */
 package thepurplepoe.gravitech.renders;
 
 import java.lang.reflect.Field;
@@ -62,13 +13,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
@@ -87,7 +38,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thepurplepoe.gravitech.GS_Items;
+import thepurplepoe.gravitech.items.GravitechItems;
 import thepurplepoe.gravitech.items.ItemAdvancedDrill;
 
 @SideOnly(value=Side.CLIENT)
@@ -125,7 +76,7 @@ implements IResourceManagerReloadListener {
     public void renderAdditionalBlockBounds(DrawBlockHighlightEvent event) {
         EntityPlayer player;
         ItemStack stack;
-        if (event.getSubID() == 0 && event.getTarget().typeOfHit == RayTraceResult.Type.BLOCK && (stack = (player = event.getPlayer()).getHeldItem(EnumHand.MAIN_HAND)) != null && stack.getItem() == GS_Items.ADVANCED_DRILL.getInstance() && ItemAdvancedDrill.readDrillMode(stack) == ItemAdvancedDrill.DrillMode.BIG_HOLES) {
+        if (event.getSubID() == 0 && event.getTarget().typeOfHit == RayTraceResult.Type.BLOCK && (stack = (player = event.getPlayer()).getHeldItem(EnumHand.MAIN_HAND)) != null && stack.getItem() == GravitechItems.advancedDrill && ItemAdvancedDrill.readDrillMode(stack) == ItemAdvancedDrill.DrillMode.BIG_HOLES) {
             PrettyUtil.drawAdditionalBlockbreak(event.getContext(), player, event.getPartialTicks(), ItemAdvancedDrill.getBrokenBlocks(player, event.getTarget()));
         }
     }
@@ -169,10 +120,10 @@ implements IResourceManagerReloadListener {
         GlStateManager.alphaFunc((int)516, (float)0.1f);
         GlStateManager.enableAlpha();
         GlStateManager.pushMatrix();
-        VertexBuffer worldRenderer = Tessellator.getInstance().getBuffer();
+        BufferBuilder worldRenderer = Tessellator.getInstance().getBuffer();
         worldRenderer.begin(7, DefaultVertexFormats.BLOCK);
         worldRenderer.setTranslation(- x, - y, - z);
-        World world = entity.worldObj;
+        World world = entity.world;
         for (BlockPos pos : blocks) {
             boolean hasBreak;
             IBlockState state = world.getBlockState(pos);

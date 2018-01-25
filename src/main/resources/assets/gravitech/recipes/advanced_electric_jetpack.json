@@ -1,0 +1,42 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"CJC",
+		"BLB",
+		"GAG"
+	],
+	"key": {
+		"J": {
+	      	"item": "ic2:jetpack_electric",
+	      	"data": 32767
+		},
+		"B": {
+			"item": "gravitech:crafting",
+			"data": 6
+		},
+		"C": {
+			"item": "ic2:crafting",
+			"data": 15
+		},	
+		"L": {
+			"item": "gravitech:advancedLappack",
+	      	"data": 32767
+		},	
+		"A": {
+			"type": "forge:ore_dict",
+			"ore": "circuitAdvanced"
+		},
+		"G": {
+			"item": "ic2:cable",
+			"data": 1,
+			"dataType": {
+				"type": "1",
+				"insulation": "0"
+			}
+		}
+	},
+	"result": {
+		"item": "gravitech:advancedJetpack",
+	    "data": 32767
+	}
+}

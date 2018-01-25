@@ -1,55 +1,10 @@
-/*
- * Decompiled with CFR 0_124.
- * 
- * Could not load the following classes:
- *  com.google.common.base.CaseFormat
- *  ic2.core.IC2
- *  ic2.core.Platform
- *  ic2.core.init.Localization
- *  ic2.core.item.tool.ItemDrill
- *  ic2.core.item.tool.ItemElectricTool
- *  ic2.core.item.tool.ItemElectricTool$HarvestLevel
- *  ic2.core.ref.ItemName
- *  ic2.core.util.Keyboard
- *  ic2.core.util.StackUtil
- *  net.minecraft.block.Block
- *  net.minecraft.block.material.Material
- *  net.minecraft.block.state.IBlockState
- *  net.minecraft.client.renderer.block.model.ModelResourceLocation
- *  net.minecraft.entity.player.EntityPlayer
- *  net.minecraft.entity.player.EntityPlayerMP
- *  net.minecraft.item.EnumRarity
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.network.NetHandlerPlayServer
- *  net.minecraft.network.Packet
- *  net.minecraft.network.play.server.SPacketBlockChange
- *  net.minecraft.server.management.PlayerInteractionManager
- *  net.minecraft.tileentity.TileEntity
- *  net.minecraft.util.ActionResult
- *  net.minecraft.util.EnumActionResult
- *  net.minecraft.util.EnumFacing
- *  net.minecraft.util.EnumFacing$Axis
- *  net.minecraft.util.EnumHand
- *  net.minecraft.util.ResourceLocation
- *  net.minecraft.util.math.BlockPos
- *  net.minecraft.util.math.RayTraceResult
- *  net.minecraft.util.text.TextFormatting
- *  net.minecraft.world.GameType
- *  net.minecraft.world.IBlockAccess
- *  net.minecraft.world.World
- *  net.minecraftforge.client.model.ModelLoader
- *  net.minecraftforge.common.ForgeHooks
- *  net.minecraftforge.fml.common.registry.GameRegistry
- *  net.minecraftforge.fml.common.registry.IForgeRegistryEntry
- *  net.minecraftforge.fml.relauncher.Side
- *  net.minecraftforge.fml.relauncher.SideOnly
- */
 package thepurplepoe.gravitech.items;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import com.google.common.base.CaseFormat;
 
@@ -63,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
@@ -74,7 +30,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
@@ -83,25 +38,25 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import thepurplepoe.gravitech.Gravitech;
 
 public class ItemAdvancedDrill
 extends ItemDrill {
+	public String itemName;
     protected static final Material[] MATERIALS = new Material[]{Material.ROCK, Material.GRASS, Material.GROUND, Material.SAND, Material.CLAY};
-    protected static final String NAME = "advancedDrill";
 
-    public ItemAdvancedDrill() {
+    public ItemAdvancedDrill(String name) {
         super(null, 160, ItemElectricTool.HarvestLevel.Iridium, 45000, 500, 2, DrillMode.NORMAL.drillSpeed);
-        ((ItemAdvancedDrill)GameRegistry.register((IForgeRegistryEntry)this, (ResourceLocation)new ResourceLocation("Gravitech", "advancedDrill"))).setUnlocalizedName("advancedDrill");
+        itemName = name;
+        this.setRegistryName(name);
+        this.setUnlocalizedName(name);
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("Gravitech:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, "advancedDrill"), null));
+    public void registerModels() {
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("gravitech:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, "advancedDrill"), null));
     }
 
     public static DrillMode readDrillMode(ItemStack stack) {
@@ -117,21 +72,21 @@ extends ItemDrill {
     }
 
     public String getUnlocalizedName() {
-        return "Gravitech." + super.getUnlocalizedName().substring(4);
+        return "gravitech." + super.getUnlocalizedName().substring(4);
     }
 
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-        if (IC2.keyboard.isModeSwitchKeyDown(player)) {
-            if (!world.isRemote) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        if (IC2.keyboard.isModeSwitchKeyDown(playerIn)) {
+            if (!worldIn.isRemote) {
+            	ItemStack stack = playerIn.getHeldItem(handIn);
                 DrillMode mode = ItemAdvancedDrill.readNextDrillMode(stack);
                 ItemAdvancedDrill.saveDrillMode(stack, mode);
-                Gravitech.messagePlayer(player, "Gravitech.advancedDrill.mode", mode.colour, mode.translationName);
-                this.efficiencyOnProperMaterial = mode.drillSpeed;
+                Gravitech.messagePlayer(playerIn, "gravitech.advancedDrill.mode", mode.colour, mode.translationName);
+                this.efficiency = mode.drillSpeed;
                 this.operationEnergyCost = mode.energyCost;
             }
-            return new ActionResult(EnumActionResult.SUCCESS, (Object)stack);
-        }
-        return super.onItemRightClick(stack, world, player, hand);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));        }
+        return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
     public static Collection<BlockPos> getBrokenBlocks(EntityPlayer player, RayTraceResult ray) {
@@ -156,7 +111,7 @@ extends ItemDrill {
                 zMove = 0;
             }
         }
-        World world = player.worldObj;
+        World world = player.world;
         ArrayList<BlockPos> list = new ArrayList<BlockPos>(9);
         for (int x = pos.getX() - xMove; x <= pos.getX() + xMove; ++x) {
             for (int y = pos.getY() - yMove; y <= pos.getY() + yMove; ++y) {
@@ -185,7 +140,7 @@ extends ItemDrill {
 
     public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
         if (ItemAdvancedDrill.readDrillMode(stack) == DrillMode.BIG_HOLES) {
-            World world = player.worldObj;
+            World world = player.world;
             if (!world.isRemote) {
                 Collection<BlockPos> blocks = ItemAdvancedDrill.getBrokenBlocks(player, this.rayTrace(world, player, true));
                 if (!blocks.contains((Object)pos) && ItemAdvancedDrill.canBlockBeMined(world, pos, player, true)) {
@@ -228,7 +183,7 @@ extends ItemDrill {
                     ((EntityPlayerMP)player).connection.sendPacket((Packet)new SPacketBlockChange(world, blockPos));
                 }
                 if (powerRanOut) {
-                    IC2.platform.messagePlayer(player, "Gravitech.advancedDrill.ranOut", new Object[0]);
+                    IC2.platform.messagePlayer(player, "gravitech.advancedDrill.ranOut", new Object[0]);
                 }
                 return true;
             }
@@ -241,9 +196,9 @@ extends ItemDrill {
     }
 
     @SideOnly(value=Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-        super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add((Object)TextFormatting.GOLD + Localization.translate((String)"Gravitech.advancedDrill.mode", (Object[])new Object[]{new StringBuilder().append((Object)TextFormatting.WHITE).append(Localization.translate((String)ItemAdvancedDrill.readDrillMode((ItemStack)stack).translationName)).toString()}));
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    	super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add((Object)TextFormatting.GOLD + Localization.translate((String)"gravitech.advancedDrill.mode", (Object[])new Object[]{new StringBuilder().append((Object)TextFormatting.WHITE).append(Localization.translate((String)ItemAdvancedDrill.readDrillMode((ItemStack)stack).translationName)).toString()}));
     }
 
     public static enum DrillMode {
@@ -259,7 +214,7 @@ extends ItemDrill {
         private static final DrillMode[] VALUES;
 
         private DrillMode(TextFormatting colour, float speed, double energyCost) {
-            this.translationName = "Gravitech.advancedDrill." + CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
+            this.translationName = "gravitech.advancedDrill." + CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
             this.energyCost = energyCost;
             this.drillSpeed = speed;
             this.colour = colour;
