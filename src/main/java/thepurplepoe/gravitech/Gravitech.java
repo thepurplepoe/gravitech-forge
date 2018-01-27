@@ -5,10 +5,12 @@ import org.apache.logging.log4j.Logger;
 import ic2.core.IC2;
 import ic2.core.init.Localization;
 import ic2.core.item.armor.jetpack.JetpackAttachmentRecipe;
+import ic2.core.item.tool.EntityMiningLaser;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentBase;
@@ -26,6 +28,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import thepurplepoe.gravitech.entity.EntityAdvancedMiningLaser;
 import thepurplepoe.gravitech.items.GravitechItems;
 import thepurplepoe.gravitech.renders.GravitechOverlay;
 import thepurplepoe.gravitech.renders.PrettyUtil;
@@ -50,6 +54,9 @@ public final class Gravitech {
         
         GravitechItems.setup();
         this.registerJetpackBlacklist();
+        
+        EntityRegistry.registerModEntity(new ResourceLocation("gravitech", "advanced_mining_laser"), EntityAdvancedMiningLaser.class, (String)"advancedMiningLaser", (int)0, (Object)this, (int)160, (int)5, (boolean)true);
+        
         //RecipeSorter.register((String)"gs:colourCarrying", ColourCarryingRecipe.class, (RecipeSorter.Category)RecipeSorter.Category.SHAPED, (String)"after:ic2:shaped");
         //RecipeSorter.register((String)"gs:graviDying", ColourDyingRecipe.class, (RecipeSorter.Category)RecipeSorter.Category.SHAPELESS, (String)"after:ic2:shapeless");
         //GameRegistry.addRecipe((IRecipe)new ColourDyingRecipe());

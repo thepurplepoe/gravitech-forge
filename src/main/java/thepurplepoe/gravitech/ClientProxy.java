@@ -23,6 +23,7 @@ public class ClientProxy extends CommonProxy {
 		GravitechItems.graviChestplate.registerModels();
 		GravitechItems.graviTool.registerModels();
 		GravitechItems.vajra.registerModels();
+		GravitechItems.tacticalLaser.registerModels();
 		for (int i = 0; i < 7; i++) {
 			GravitechItems.crafting.registerModels(i);
 		}

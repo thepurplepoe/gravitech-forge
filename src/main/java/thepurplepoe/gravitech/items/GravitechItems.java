@@ -16,6 +16,7 @@ public class GravitechItems {
 	public static ItemGraviChestplate graviChestplate;
 	public static ItemGraviTool graviTool;
 	public static ItemVajra vajra;
+	public static ItemTacticalLaser tacticalLaser;
 	public static ItemCraftingThings crafting;
 	
 	public static void setup() {
@@ -28,6 +29,7 @@ public class GravitechItems {
 		graviChestplate = new ItemGraviChestplate("graviChestplate");
 		graviTool = new ItemGraviTool("graviTool");
 		vajra = new ItemVajra("vajra");
+		tacticalLaser = new ItemTacticalLaser("tacticalLaser");
 		crafting = new ItemCraftingThings();
 	}
 	
@@ -58,6 +60,9 @@ public class GravitechItems {
 			
 			vajra.setCreativeTab(IC2.tabIC2);
 			registry.register(vajra);
+			
+			tacticalLaser.setCreativeTab(IC2.tabIC2);
+			registry.register(tacticalLaser);
 			
 			crafting.setCreativeTab(IC2.tabIC2);
 			registry.register(crafting);
