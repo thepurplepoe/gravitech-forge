@@ -17,11 +17,11 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public final class GraviKeys
+public final class GraviKeysOLD
 extends Keyboard {
     private static final Keyboard.IKeyWatcher FLY_KEY = new KeyWatcher(GraviKey.fly);
 
-    private GraviKeys() {
+    private GraviKeysOLD() {
     }
 
     static void addFlyKey() {

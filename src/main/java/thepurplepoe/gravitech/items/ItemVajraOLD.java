@@ -40,15 +40,15 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thepurplepoe.gravitech.Gravitech;
+import thepurplepoe.gravitech.GravitechOLD;
 
-public class ItemVajra
+public class ItemVajraOLD
 extends ItemElectricTool {
     protected static final String NAME = "vajra";
     public String itemName;
     public static boolean accurateEnabled = true;
 
-    public ItemVajra(String name) {
+    public ItemVajraOLD(String name) {
         super(null, 3333, ItemElectricTool.HarvestLevel.Iridium, EnumSet.of(ItemElectricTool.ToolClass.Pickaxe, ItemElectricTool.ToolClass.Shovel, ItemElectricTool.ToolClass.Axe));
         itemName = name;
         this.maxCharge = 10000000;
@@ -79,12 +79,12 @@ extends ItemElectricTool {
             NBTTagCompound nbt = StackUtil.getOrCreateNbtData((ItemStack)stack);
             if (nbt.getBoolean("accurate")) {
                 nbt.setBoolean("accurate", false);
-                Gravitech.messagePlayer(playerIn, "gravitech.vajra.silkTouch", TextFormatting.DARK_RED, Localization.translate((String)"gravitech.message.off"));
+                GravitechOLD.messagePlayer(playerIn, "gravitech.vajra.silkTouch", TextFormatting.DARK_RED, Localization.translate((String)"gravitech.message.off"));
             } else if (accurateEnabled) {
                 nbt.setBoolean("accurate", true);
-                Gravitech.messagePlayer(playerIn, "gravitech.vajra.silkTouch", TextFormatting.DARK_GREEN, Localization.translate((String)"gravitech.message.on"));
+                GravitechOLD.messagePlayer(playerIn, "gravitech.vajra.silkTouch", TextFormatting.DARK_GREEN, Localization.translate((String)"gravitech.message.on"));
             } else {
-                Gravitech.messagePlayer(playerIn, "gravitech.vajra.silkTouchDisabled", TextFormatting.DARK_RED, new Object[0]);
+                GravitechOLD.messagePlayer(playerIn, "gravitech.vajra.silkTouchDisabled", TextFormatting.DARK_RED, new Object[0]);
             }
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
         }

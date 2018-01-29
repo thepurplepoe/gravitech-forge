@@ -11,11 +11,11 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public class ItemGraviChestplate
+public class ItemGraviChestplateOLD
 extends ItemAdvancedElectricJetpack {
     protected static final int DEFAULT_COLOUR = -1;
 
-    public ItemGraviChestplate(String name) {
+    public ItemGraviChestplateOLD(String name) {
         super(name, 6.0E7, 100000.0, 4);
     }
 

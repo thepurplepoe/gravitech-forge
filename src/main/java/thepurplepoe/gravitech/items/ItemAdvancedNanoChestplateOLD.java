@@ -7,14 +7,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemAdvancedNanoChestplate
+public class ItemAdvancedNanoChestplateOLD
 extends ItemAdvancedElectricJetpack {
     protected static final ItemStack WATER_CELL = IC2Items.getItem((String)"fluid_cell", (String)"water");
     protected static final ItemStack EMPTY_CELL = IC2Items.getItem((String)"fluid_cell");
     protected static final byte TICK_RATE = 20;
     protected byte ticker;
 
-    public ItemAdvancedNanoChestplate(String name) {
+    public ItemAdvancedNanoChestplateOLD(String name) {
         super(name);
     }
 

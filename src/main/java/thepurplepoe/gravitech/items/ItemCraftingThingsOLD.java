@@ -13,13 +13,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import thepurplepoe.gravitech.items.ItemCraftingThings.CraftingTypes;
+import thepurplepoe.gravitech.items.ItemCraftingThingsOLD.CraftingTypes;
 
-public class ItemCraftingThings
+public class ItemCraftingThingsOLD
 extends ItemMulti<CraftingTypes> {
     protected static final String NAME = "crafting";
 
-    public ItemCraftingThings() {
+    public ItemCraftingThingsOLD() {
         super(null, CraftingTypes.class);
         this.setRegistryName(NAME);
         this.setUnlocalizedName(NAME);

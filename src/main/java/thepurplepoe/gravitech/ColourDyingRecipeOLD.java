@@ -9,11 +9,11 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.RecipesArmorDyes;
 import net.minecraft.world.World;
-import thepurplepoe.gravitech.items.ItemGraviChestplate;
+import thepurplepoe.gravitech.items.ItemGraviChestplateOLD;
 
-class ColourDyingRecipe
+class ColourDyingRecipeOLD
 extends RecipesArmorDyes {
-    ColourDyingRecipe() {
+    ColourDyingRecipeOLD() {
     }
 
     public boolean matches(InventoryCrafting craftingInv, World world) {
@@ -22,7 +22,7 @@ extends RecipesArmorDyes {
         for (int slot = 0; slot < craftingInv.getSizeInventory(); ++slot) {
             ItemStack stack = craftingInv.getStackInSlot(slot);
             if (stack == null) continue;
-            if (stack.getItem() instanceof ItemGraviChestplate) {
+            if (stack.getItem() instanceof ItemGraviChestplateOLD) {
                 if (helmet != null) {
                     return false;
                 }
@@ -39,15 +39,15 @@ extends RecipesArmorDyes {
 
     public ItemStack getCraftingResult(InventoryCrafting craftingInv) {
         ItemStack armourStack = null;
-        ItemGraviChestplate chestplate = null;
+        ItemGraviChestplateOLD chestplate = null;
         int[] newRBG = new int[3];
         int totalColour = 0;
         int numberOfDyes = 0;
         for (int slot = 0; slot < craftingInv.getSizeInventory(); ++slot) {
             ItemStack stack = craftingInv.getStackInSlot(slot);
             if (stack == null) continue;
-            if (stack.getItem() instanceof ItemGraviChestplate) {
-                chestplate = (ItemGraviChestplate)stack.getItem();
+            if (stack.getItem() instanceof ItemGraviChestplateOLD) {
+                chestplate = (ItemGraviChestplateOLD)stack.getItem();
                 if (armourStack != null) {
                     return null;
                 }

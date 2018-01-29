@@ -3,11 +3,11 @@ package thepurplepoe.gravitech.items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class ItemAdvancedLappack
-extends ItemGeneralLappack {
+public class ItemAdvancedLappackOLD
+extends ItemGeneralLappackOLD {
 
 	
-    public ItemAdvancedLappack(String name) {
+    public ItemAdvancedLappackOLD(String name) {
         super(name, 3000000.0, 30000.0, 3);
     }
 

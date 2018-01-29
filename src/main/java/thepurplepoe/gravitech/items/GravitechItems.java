@@ -1,72 +1,36 @@
 package thepurplepoe.gravitech.items;
 
-import ic2.core.IC2;
 import net.minecraft.item.Item;
-import net.minecraftforge.registries.IForgeRegistry;
-import thepurplepoe.gravitech.Gravitech;
+import net.minecraft.util.registry.RegistrySimple;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@EventBusSubscriber
 public class GravitechItems {
+	private static RegistrySimple<String, IRegistrableItem> itemRegister = new RegistrySimple<String, IRegistrableItem>();
 	
-	public static ItemAdvancedChainsaw advancedChainsaw;
-	public static ItemAdvancedDrill advancedDrill;
-	public static ItemAdvancedElectricJetpack advancedElectricJetpack;
-	public static ItemAdvancedNanoChestplate advancedNanoChestplate;
-	public static ItemAdvancedLappack advancedLappack;
-	public static ItemUltimateLappack ultimateLappack;
-	public static ItemGraviChestplate graviChestplate;
-	public static ItemGraviTool graviTool;
-	public static ItemVajra vajra;
-	public static ItemTacticalLaser tacticalLaser;
-	public static ItemCraftingThings crafting;
+	public static IRegistrableItem advancedChainsaw;
+	public static IRegistrableItem advancedDrill;
+	public static IRegistrableItem advancedElectricJetpack;
+	public static IRegistrableItem advancedLappack;
+	public static IRegistrableItem advancedNanoChestplate;
+	public static IRegistrableItem crafting;
+	public static IRegistrableItem graviChestplate;
+	public static IRegistrableItem graviTool;
+	public static IRegistrableItem tacticalLaser;
+	public static IRegistrableItem ultimateLappack;
+	public static IRegistrableItem vajra;
 	
-	public static void setup() {
-		advancedChainsaw = new ItemAdvancedChainsaw("advancedChainsaw");
-		advancedDrill = new ItemAdvancedDrill("advancedDrill");
-		advancedElectricJetpack = new ItemAdvancedElectricJetpack("advancedJetpack");
-		advancedNanoChestplate	 = new ItemAdvancedNanoChestplate("advancedNanoChestplate");
-		advancedLappack = new ItemAdvancedLappack("advancedLappack");
-		ultimateLappack = new ItemUltimateLappack("ultimateLappack");
-		graviChestplate = new ItemGraviChestplate("graviChestplate");
-		graviTool = new ItemGraviTool("graviTool");
-		vajra = new ItemVajra("vajra");
-		tacticalLaser = new ItemTacticalLaser("tacticalLaser");
-		crafting = new ItemCraftingThings();
+	public static void setupItems() {
+		
 	}
 	
-	public static void register(IForgeRegistry<Item> registry) {
-			advancedChainsaw.setCreativeTab(IC2.tabIC2);
-			registry.register(advancedChainsaw);
-			
-			advancedDrill.setCreativeTab(IC2.tabIC2);
-			registry.register(advancedDrill);
-			
-			advancedElectricJetpack.setCreativeTab(IC2.tabIC2);
-			registry.register(advancedElectricJetpack);
-			
-			advancedNanoChestplate.setCreativeTab(IC2.tabIC2);
-			registry.register(advancedNanoChestplate);
-			
-			advancedLappack.setCreativeTab(IC2.tabIC2);
-			registry.register(advancedLappack);
-			
-			ultimateLappack.setCreativeTab(IC2.tabIC2);
-			registry.register(ultimateLappack);
-			
-			graviChestplate.setCreativeTab(IC2.tabIC2);
-			registry.register(graviChestplate);
-			
-			graviTool.setCreativeTab(IC2.tabIC2);
-			registry.register(graviTool);
-			
-			vajra.setCreativeTab(IC2.tabIC2);
-			registry.register(vajra);
-			
-			tacticalLaser.setCreativeTab(IC2.tabIC2);
-			registry.register(tacticalLaser);
-			
-			crafting.setCreativeTab(IC2.tabIC2);
-			registry.register(crafting);
-			
-			Gravitech.proxy.registerModels();
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		for (IRegistrableItem i : itemRegister) {
+			i.registerModel();
+			event.getRegistry().register((Item)advancedChainsaw);
+		}
 	}
 }

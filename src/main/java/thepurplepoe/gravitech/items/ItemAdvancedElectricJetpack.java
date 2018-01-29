@@ -22,8 +22,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thepurplepoe.gravitech.GraviKeys;
-import thepurplepoe.gravitech.Gravitech;
+import thepurplepoe.gravitech.GraviKeysOLD;
+import thepurplepoe.gravitech.GravitechOLD;
 
 public class ItemAdvancedElectricJetpack
 extends ItemArmorElectric
@@ -86,12 +86,12 @@ implements IBoostingJetpack {
     public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
         NBTTagCompound nbt = StackUtil.getOrCreateNbtData((ItemStack)stack);
         byte toggleTimer = nbt.getByte("toggleTimer");
-        if (GraviKeys.isFlyKeyDown(player) && toggleTimer == 0) {
+        if (GraviKeysOLD.isFlyKeyDown(player) && toggleTimer == 0) {
             toggleTimer = 10;
             nbt.setByte("toggleTimer", (byte)10);
             if (!world.isRemote) {
                 String mode = ItemAdvancedElectricJetpack.switchJetpack(stack) ? (Object)TextFormatting.DARK_GREEN + Localization.translate((String)"gravitech.message.on") : (Object)TextFormatting.DARK_RED + Localization.translate((String)"gravitech.message.off");
-                Gravitech.messagePlayer(player, "gravitech.message.jetpackSwitch", TextFormatting.YELLOW, mode);
+                GravitechOLD.messagePlayer(player, "gravitech.message.jetpackSwitch", TextFormatting.YELLOW, mode);
             }
         }
         if (toggleTimer > 0 && !ItemAdvancedElectricJetpack.isJetpackOn(stack)) {

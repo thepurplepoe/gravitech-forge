@@ -6,17 +6,17 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thepurplepoe.gravitech.items.GravitechItems;
-import thepurplepoe.gravitech.renders.PrettyUtil;
+import thepurplepoe.gravitech.items.GravitechItemsOLD;
+import thepurplepoe.gravitech.renders.PrettyUtilOLD;
 
 @SideOnly(value=Side.CLIENT)
-class GraviChestplateColourHandler
+class GraviChestplateColourHandlerOLD
 implements IItemColor {
-    GraviChestplateColourHandler() {
+    GraviChestplateColourHandlerOLD() {
     }
 
     static void register() {
-        PrettyUtil.mc.getItemColors().registerItemColorHandler((IItemColor)new GraviChestplateColourHandler(), new Item[]{GravitechItems.graviChestplate});
+        PrettyUtilOLD.mc.getItemColors().registerItemColorHandler((IItemColor)new GraviChestplateColourHandlerOLD(), new Item[]{GravitechItemsOLD.graviChestplate});
     }
 
     public int getColorFromItemstack(ItemStack stack, int tintIndex) {

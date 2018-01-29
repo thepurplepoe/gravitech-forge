@@ -2,11 +2,12 @@ package thepurplepoe.gravitech;
 
 import java.io.File;
 
+import ic2.core.IC2;
 import net.minecraftforge.common.config.Configuration;
-import thepurplepoe.gravitech.items.ItemVajra;
-import thepurplepoe.gravitech.renders.GravitechOverlay;
+import thepurplepoe.gravitech.items.ItemVajraOLD;
+import thepurplepoe.gravitech.renders.GravitechOverlayOLD;
 
-final class Config {
+final class ConfigOLD {
     private static final String HUD = "HUD settings";
     private static final String CRAFTING = "Recipe settings";
     static boolean canCraftAdvJetpack;
@@ -20,17 +21,17 @@ final class Config {
     static boolean canCraftVajra;
     static boolean shouldReplaceQuantum;
 
-    Config() {
+    ConfigOLD() {
     }
 
     static void loadConfig(File configFile, boolean client) {
-        Gravitech.log.info("Loading GS Config from " + configFile.getAbsolutePath());
+        GravitechOLD.log.info("Loading GS Config from " + configFile.getAbsolutePath());
         Configuration config = new Configuration(configFile);
         try {
             config.load();
             if (client) {
-                GravitechOverlay.hudEnabled = config.get("HUD settings", "enableHud", true).getBoolean(true);
-                GravitechOverlay.hudPos = Config.getHudPosition(config);
+                GravitechOverlayOLD.hudEnabled = config.get("HUD settings", "enableHud", true).getBoolean(true);
+                GravitechOverlayOLD.hudPos = ConfigOLD.getHudPosition(config);
             }
             canCraftAdvJetpack = !config.get("Recipe settings", "Disable Advanced Jetpack recipe", false).getBoolean(false);
             canCraftAdvNano = !config.get("Recipe settings", "Disable Advanced NanoChestPlate recipe", false).getBoolean(false);
@@ -42,10 +43,10 @@ final class Config {
             canCraftAdvChainsaw = !config.get("Recipe settings", "Disable Advanced Chainsaw recipe", false).getBoolean(false);
             canCraftGraviTool = !config.get("Recipe settings", "Disable GraviTool recipe", false).getBoolean(false);
             canCraftVajra = !config.get("Recipe settings", "Disable Vajra recipe", false).getBoolean(false);
-            ItemVajra.accurateEnabled = !config.get("Vajra settings", "Disable Vajra accurate mode", false).getBoolean(false);
+            ItemVajraOLD.accurateEnabled = !config.get("Vajra settings", "Disable Vajra accurate mode", false).getBoolean(false);
         }
         catch (Exception e) {
-            Gravitech.log.fatal("Fatal error reading config file.", (Throwable)e);
+            GravitechOLD.log.fatal("Fatal error reading config file.", (Throwable)e);
             throw new RuntimeException(e);
         }
         finally {

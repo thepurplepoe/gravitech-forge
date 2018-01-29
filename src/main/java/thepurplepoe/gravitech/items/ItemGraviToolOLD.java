@@ -62,9 +62,9 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thepurplepoe.gravitech.Gravitech;
+import thepurplepoe.gravitech.GravitechOLD;
 
-public class ItemGraviTool
+public class ItemGraviToolOLD
 extends ItemTool
 implements IElectricItem {
     protected static final String NAME = "graviTool";
@@ -74,7 +74,7 @@ implements IElectricItem {
     protected static final double TAP = 50.0;
     protected static final double SCREW = 500.0;
 
-    public ItemGraviTool(String name) {
+    public ItemGraviToolOLD(String name) {
         super(Item.ToolMaterial.IRON, Collections.emptySet());
     	itemName = name;
         this.setMaxDamage(27);
@@ -89,7 +89,7 @@ implements IElectricItem {
         ModelLoader.setCustomMeshDefinition((Item)this, (ItemMeshDefinition)new ItemMeshDefinition(){
 
             public ModelResourceLocation getModelLocation(ItemStack stack) {
-                GraviToolMode mode = ItemGraviTool.hasToolMode(stack) ? ItemGraviTool.readToolMode(stack) : GraviToolMode.HOE;
+                GraviToolMode mode = ItemGraviToolOLD.hasToolMode(stack) ? ItemGraviToolOLD.readToolMode(stack) : GraviToolMode.HOE;
                 return mode.model;
             }
         });
@@ -128,8 +128,8 @@ implements IElectricItem {
     }
 
     public String getItemStackDisplayName(ItemStack stack) {
-        if (ItemGraviTool.hasToolMode(stack)) {
-            return Localization.translate((String)"gravitech.graviTool.set", (Object[])new Object[]{Localization.translate((String)this.getUnlocalizedName(stack)), Localization.translate((String)ItemGraviTool.readToolMode((ItemStack)stack).translationName)});
+        if (ItemGraviToolOLD.hasToolMode(stack)) {
+            return Localization.translate((String)"gravitech.graviTool.set", (Object[])new Object[]{Localization.translate((String)this.getUnlocalizedName(stack)), Localization.translate((String)ItemGraviToolOLD.readToolMode((ItemStack)stack).translationName)});
         }
         return Localization.translate((String)this.getUnlocalizedName(stack));
     }
@@ -140,9 +140,9 @@ implements IElectricItem {
                 IC2.audioManager.playOnce((Object)playerIn, PositionSpec.Hand, "gravitech:toolChange.ogg", true, IC2.audioManager.getDefaultVolume());
             } else {
             	ItemStack stack = playerIn.getHeldItem(handIn);
-                GraviToolMode mode = ItemGraviTool.readNextToolMode(stack);
-                ItemGraviTool.saveToolMode(stack, mode);
-                Gravitech.messagePlayer(playerIn, "gravitech.graviTool.changeTool", mode.colour, mode.translationName);
+                GraviToolMode mode = ItemGraviToolOLD.readNextToolMode(stack);
+                ItemGraviToolOLD.saveToolMode(stack, mode);
+                GravitechOLD.messagePlayer(playerIn, "gravitech.graviTool.changeTool", mode.colour, mode.translationName);
             }
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
         }
@@ -151,7 +151,7 @@ implements IElectricItem {
 
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
     	ItemStack stack = player.getHeldItem(hand);
-        switch (ItemGraviTool.readToolMode(stack)) {
+        switch (ItemGraviToolOLD.readToolMode(stack)) {
             case WRENCH: {
                 return this.onWrenchUse(stack, player, world, pos, side) ? (world.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS) : EnumActionResult.FAIL;
             }
@@ -166,7 +166,7 @@ implements IElectricItem {
 
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     	ItemStack stack = player.getHeldItem(hand);
-        switch (ItemGraviTool.readToolMode(stack)) {
+        switch (ItemGraviToolOLD.readToolMode(stack)) {
             case HOE: {
                 return this.onHoeUse(stack, player, worldIn, pos, facing) ? (worldIn.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS) : EnumActionResult.FAIL;
             }
@@ -181,7 +181,7 @@ implements IElectricItem {
 
     
     protected boolean onHoeUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side) {
-        if (!player.canPlayerEdit(pos.offset(side), side, stack) || !ItemGraviTool.hasNecessaryPower(stack, HOE, player)) {
+        if (!player.canPlayerEdit(pos.offset(side), side, stack) || !ItemGraviToolOLD.hasNecessaryPower(stack, HOE, player)) {
             return false;
         }
         UseHoeEvent event = new UseHoeEvent(player, stack, world, pos);
@@ -189,7 +189,7 @@ implements IElectricItem {
             return false;
         }
         if (event.getResult() == Event.Result.ALLOW) {
-            return ItemGraviTool.checkNecessaryPower(stack, HOE, player, true);
+            return ItemGraviToolOLD.checkNecessaryPower(stack, HOE, player, true);
         }
         IBlockState state = Util.getBlockState((IBlockAccess)world, (BlockPos)pos);
         Block block = state.getBlock();
@@ -213,7 +213,7 @@ implements IElectricItem {
     
 
     protected boolean setHoedBlock(ItemStack stack, EntityPlayer player, World world, BlockPos pos, IBlockState state) {
-        if (ItemGraviTool.checkNecessaryPower(stack, HOE, player, true)) {
+        if (ItemGraviToolOLD.checkNecessaryPower(stack, HOE, player, true)) {
             world.playSound(player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
             if (!world.isRemote) {
                 world.setBlockState(pos, state, 11);
@@ -229,7 +229,7 @@ implements IElectricItem {
         if (side.getAxis() != EnumFacing.Axis.Y && (te = world.getTileEntity(pos)) instanceof TileEntityBarrel) {
             TileEntityBarrel barrel = (TileEntityBarrel)te;
             if (!barrel.getActive()) {
-                if (ItemGraviTool.checkNecessaryPower(stack, TAP, player, true)) {
+                if (ItemGraviToolOLD.checkNecessaryPower(stack, TAP, player, true)) {
                     if (!world.isRemote) {
                         barrel.setActive(true);
                         barrel.onPlaced(stack, null, side.getOpposite());
@@ -240,8 +240,8 @@ implements IElectricItem {
             }
             return false;
         }
-        if (state.getBlock() == BlockName.rubber_wood.getInstance() && ItemGraviTool.hasNecessaryPower(stack, TAP, player)) {
-            return ItemTreetap.attemptExtract((EntityPlayer)player, (World)world, (BlockPos)pos, (EnumFacing)side, (IBlockState)state, (List)null) && ItemGraviTool.checkNecessaryPower(stack, TAP, player);
+        if (state.getBlock() == BlockName.rubber_wood.getInstance() && ItemGraviToolOLD.hasNecessaryPower(stack, TAP, player)) {
+            return ItemTreetap.attemptExtract((EntityPlayer)player, (World)world, (BlockPos)pos, (EnumFacing)side, (IBlockState)state, (List)null) && ItemGraviToolOLD.checkNecessaryPower(stack, TAP, player);
         }
         return false;
     }
@@ -263,16 +263,16 @@ implements IElectricItem {
                 newFacing = player.isSneaking() ? side.getOpposite() : side;
             }
             if (current != newFacing) {
-                if (ItemGraviTool.hasNecessaryPower(stack, ROTATE, player)) {
+                if (ItemGraviToolOLD.hasNecessaryPower(stack, ROTATE, player)) {
                     if (wrenchable.setFacing(world, pos, newFacing, player)) {
-                        return ItemGraviTool.checkNecessaryPower(stack, ROTATE, player);
+                        return ItemGraviToolOLD.checkNecessaryPower(stack, ROTATE, player);
                     }
                 } else {
                     return false;
                 }
             }
             if (wrenchable.wrenchCanRemove(world, pos, player)) {
-                if (!ItemGraviTool.hasNecessaryPower(stack, ROTATE, player)) {
+                if (!ItemGraviToolOLD.hasNecessaryPower(stack, ROTATE, player)) {
                     return false;
                 }
                 if (!world.isRemote) {
@@ -307,7 +307,7 @@ implements IElectricItem {
                         block.dropXpOnBlockBreak(world, pos, experience);
                     }
                 }
-                return ItemGraviTool.checkNecessaryPower(stack, ROTATE, player);
+                return ItemGraviToolOLD.checkNecessaryPower(stack, ROTATE, player);
             }
         }
         return false;
@@ -316,7 +316,7 @@ implements IElectricItem {
     protected boolean onScrewdriverUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos) {
         IBlockState state = Util.getBlockState((IBlockAccess)world, (BlockPos)pos);
         Block block = state.getBlock();
-        if (!block.isAir(state, (IBlockAccess)world, pos) && block instanceof BlockHorizontal && ItemGraviTool.checkNecessaryPower(stack, 500.0, player)) {
+        if (!block.isAir(state, (IBlockAccess)world, pos) && block instanceof BlockHorizontal && ItemGraviToolOLD.checkNecessaryPower(stack, 500.0, player)) {
             EnumFacing facing = (EnumFacing)state.getValue((IProperty)BlockHorizontal.FACING);
             facing = player.isSneaking() ? facing.rotateYCCW() : facing.rotateY();
             world.setBlockState(pos, state.withProperty((IProperty)BlockHorizontal.FACING, (Comparable)facing));
@@ -331,7 +331,7 @@ implements IElectricItem {
     }
 
     protected static boolean checkNecessaryPower(ItemStack stack, double usage, EntityPlayer player) {
-        return ItemGraviTool.checkNecessaryPower(stack, usage, player, false);
+        return ItemGraviToolOLD.checkNecessaryPower(stack, usage, player, false);
     }
 
     protected static boolean checkNecessaryPower(ItemStack stack, double usage, EntityPlayer player, boolean supressSound) {
