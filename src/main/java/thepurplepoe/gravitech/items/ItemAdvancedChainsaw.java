@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.google.common.base.CaseFormat;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -12,6 +13,7 @@ import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
 import ic2.core.init.Localization;
 import ic2.core.item.tool.ItemElectricTool;
+import ic2.core.ref.ItemName;
 import ic2.core.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -39,6 +41,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -46,40 +49,38 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thepurplepoe.gravitech.Gravitech;
-import thepurplepoe.gravitech.GravitechOLD;
-import thepurplepoe.gravitech.util.GravitechNames;
 
-public class ItemAdvancedChainsaw extends ItemElectricTool implements IRegistrableItem {
+public class ItemAdvancedChainsaw
+extends ItemElectricTool {
+	public String itemName;
 
-	protected ItemAdvancedChainsaw() {
-		super(null, 100, ItemElectricTool.HarvestLevel.Iron, EnumSet.of(ItemElectricTool.ToolClass.Axe, ItemElectricTool.ToolClass.Sword, ItemElectricTool.ToolClass.Shears));
-		
-		this.setRegistryName(GravitechNames.advancedChainsawName);
-		this.setUnlocalizedName(GravitechNames.advancedChainsawName);
-		this.setCreativeTab(Gravitech.TabGravitech);
-		
-		this.maxCharge = 45000;
-		this.transferLimit = 500;
-		this.tier = 2;
-	    this.efficiency = 30.0f;
-	    MinecraftForge.EVENT_BUS.register((Object)this);
-	}
+    public ItemAdvancedChainsaw(String name) {
+        super(null, 100, ItemElectricTool.HarvestLevel.Iron, EnumSet.of(ItemElectricTool.ToolClass.Axe, ItemElectricTool.ToolClass.Sword, ItemElectricTool.ToolClass.Shears));
+        this.setRegistryName(name);
+        this.setUnlocalizedName(name);
+        itemName = name;
+        this.maxCharge = 45000;
+        this.transferLimit = 500;
+        this.tier = 2;
+        this.efficiency = 30.0f;
+        MinecraftForge.EVENT_BUS.register((Object)this);
+    }
 
-	@Override
-	public void registerModel() {
-		Gravitech.proxy.registerItemModel(this, 0, new ModelResourceLocation(GravitechNames.modID + GravitechNames.advancedChainsawName));
-	}
+    @SideOnly(value=Side.CLIENT)
+    public void registerModels() {
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("gravitech:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, "advancedChainsaw"), null));
+    }
 
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if (!worldIn.isRemote && IC2.keyboard.isModeSwitchKeyDown(playerIn)) {
         	ItemStack stack = playerIn.getHeldItem(handIn);
             NBTTagCompound nbt = StackUtil.getOrCreateNbtData((ItemStack)stack);
             if (nbt.getBoolean("disableShear")) {
                 nbt.setBoolean("disableShear", false);
-                GravitechOLD.messagePlayer(playerIn, "gravitech.advancedChainsaw.shear", TextFormatting.DARK_GREEN, Localization.translate((String)"gravitech.message.on"));
+                Gravitech.messagePlayer(playerIn, "gravitech.advancedChainsaw.shear", TextFormatting.DARK_GREEN, Localization.translate((String)"gravitech.message.on"));
             } else {
                 nbt.setBoolean("disableShear", true);
-                GravitechOLD.messagePlayer(playerIn, "gravitech.advancedChainsaw.shear", TextFormatting.DARK_RED, Localization.translate((String)"gravitech.message.off"));
+                Gravitech.messagePlayer(playerIn, "gravitech.advancedChainsaw.shear", TextFormatting.DARK_RED, Localization.translate((String)"gravitech.message.off"));
             }
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
         }
@@ -135,6 +136,10 @@ public class ItemAdvancedChainsaw extends ItemElectricTool implements IRegistrab
         return false;
     }
 
+    public String getUnlocalizedName() {
+        return "gravitech." + super.getUnlocalizedName().substring(4);
+    }
+
     public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
@@ -168,5 +173,5 @@ public class ItemAdvancedChainsaw extends ItemElectricTool implements IRegistrab
     protected String getStopSound(EntityLivingBase player, ItemStack stack) {
         return "Tools/Chainsaw/ChainsawStop.ogg";
     }
-
 }
+

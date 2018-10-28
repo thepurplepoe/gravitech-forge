@@ -12,6 +12,7 @@ import ic2.core.IC2;
 import ic2.core.init.Localization;
 import ic2.core.item.tool.ItemDrill;
 import ic2.core.item.tool.ItemElectricTool;
+import ic2.core.ref.ItemName;
 import ic2.core.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -21,6 +22,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketBlockChange;
@@ -34,28 +36,28 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thepurplepoe.gravitech.Gravitech;
-import thepurplepoe.gravitech.GravitechOLD;
-import thepurplepoe.gravitech.util.GravitechNames;
 
-public class ItemAdvancedDrill extends ItemDrill implements IRegistrableItem {
+public class ItemAdvancedDrill
+extends ItemDrill {
+	public String itemName;
     protected static final Material[] MATERIALS = new Material[]{Material.ROCK, Material.GRASS, Material.GROUND, Material.SAND, Material.CLAY};
 
-    public ItemAdvancedDrill() {
+    public ItemAdvancedDrill(String name) {
         super(null, 160, ItemElectricTool.HarvestLevel.Iridium, 45000, 500, 2, DrillMode.NORMAL.drillSpeed);
-        
-		this.setRegistryName(GravitechNames.advancedDrillName);
-		this.setUnlocalizedName(GravitechNames.advancedDrillName);
-		this.setCreativeTab(Gravitech.TabGravitech);
+        itemName = name;
+        this.setRegistryName(name);
+        this.setUnlocalizedName(name);
     }
 
-	@Override
-	public void registerModel() {
-		Gravitech.proxy.registerItemModel(this, 0, new ModelResourceLocation(GravitechNames.modID + GravitechNames.advancedDrillName));
-	}
+    @SideOnly(value=Side.CLIENT)
+    public void registerModels() {
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("gravitech:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, "advancedDrill"), null));
+    }
 
     public static DrillMode readDrillMode(ItemStack stack) {
         return DrillMode.getFromID(StackUtil.getOrCreateNbtData((ItemStack)stack).getInteger("toolMode"));
@@ -69,13 +71,17 @@ public class ItemAdvancedDrill extends ItemDrill implements IRegistrableItem {
         StackUtil.getOrCreateNbtData((ItemStack)stack).setInteger("toolMode", mode.ordinal());
     }
 
+    public String getUnlocalizedName() {
+        return "gravitech." + super.getUnlocalizedName().substring(4);
+    }
+
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if (IC2.keyboard.isModeSwitchKeyDown(playerIn)) {
             if (!worldIn.isRemote) {
             	ItemStack stack = playerIn.getHeldItem(handIn);
                 DrillMode mode = ItemAdvancedDrill.readNextDrillMode(stack);
                 ItemAdvancedDrill.saveDrillMode(stack, mode);
-                GravitechOLD.messagePlayer(playerIn, "gravitech.advancedDrill.mode", mode.colour, mode.translationName);
+                Gravitech.messagePlayer(playerIn, "gravitech.advancedDrill.mode", mode.colour, mode.translationName);
                 this.efficiency = mode.drillSpeed;
                 this.operationEnergyCost = mode.energyCost;
             }
@@ -145,7 +151,7 @@ public class ItemAdvancedDrill extends ItemDrill implements IRegistrableItem {
                     Block block;
                     IBlockState state;
                     int experience;
-                    if (!ItemGraviToolOLD.hasNecessaryPower(stack, this.operationEnergyCost, player)) {
+                    if (!ItemGraviTool.hasNecessaryPower(stack, this.operationEnergyCost, player)) {
                         powerRanOut = true;
                         break;
                     }

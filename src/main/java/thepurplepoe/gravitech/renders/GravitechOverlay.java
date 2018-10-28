@@ -17,17 +17,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import thepurplepoe.gravitech.items.ItemAdvancedElectricJetpack;
 
 @SideOnly(value=Side.CLIENT)
-public class GravitechOverlayOLD {
+public class GravitechOverlay {
     public static boolean hudEnabled = true;
     public static byte hudPos = 1;
 
-    public GravitechOverlayOLD() {
+    public GravitechOverlay() {
         MinecraftForge.EVENT_BUS.register((Object)this);
     }
 
     @SubscribeEvent
     public void onRender(TickEvent.RenderTickEvent event) {
-        Minecraft mc = PrettyUtilOLD.mc;
+        Minecraft mc = PrettyUtil.mc;
         if (hudEnabled && mc.world != null && mc.inGameHasFocus && !mc.gameSettings.showDebugInfo) {
             Item item;
             ItemStack stack = mc.player.inventory.armorItemInSlot(EntityEquipmentSlot.CHEST.getIndex());
@@ -41,7 +41,7 @@ public class GravitechOverlayOLD {
             int statusWidth = 0;
             if (item instanceof ItemAdvancedElectricJetpack) {
                 float chargeLevel = (float)((IJetpack)item).getChargeLevel(stack) * 100.0f;
-                energyLevel = Localization.translate((String)"gravitech.message.energy", (Object[])new Object[]{GravitechOverlayOLD.getEnergyStatus(chargeLevel)});
+                energyLevel = Localization.translate((String)"gravitech.message.energy", (Object[])new Object[]{GravitechOverlay.getEnergyStatus(chargeLevel)});
                 energyLevelWidth = fontRenderer.getStringWidth(Localization.translate((String)"gravitech.message.energy", (Object[])new Object[]{Integer.toString(Math.round(chargeLevel))}));
                 if (ItemAdvancedElectricJetpack.isJetpackOn(stack)) {
                     String hoverModeStatus = ItemAdvancedElectricJetpack.isHovering(stack) ? Localization.translate((String)"gravitech.message.hover") : "";

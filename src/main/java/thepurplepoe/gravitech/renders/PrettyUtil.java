@@ -38,15 +38,15 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thepurplepoe.gravitech.items.GravitechItemsOLD;
+import thepurplepoe.gravitech.items.GravitechItems;
 import thepurplepoe.gravitech.items.ItemAdvancedDrill;
 
 @SideOnly(value=Side.CLIENT)
-public final class PrettyUtilOLD
+public final class PrettyUtil
 implements IResourceManagerReloadListener {
     public static final TextureAtlasSprite[] DESTROY_BLOCK_ICONS = new TextureAtlasSprite[10];
     public static final Minecraft mc = Minecraft.getMinecraft();
-    private static final Field CUR_BLOCK_DAMAGE_MP = PrettyUtilOLD.getCBDMP();
+    private static final Field CUR_BLOCK_DAMAGE_MP = PrettyUtil.getCBDMP();
 
     private static Field getCBDMP() {
         Field field = ReflectionUtil.getField(PlayerControllerMP.class, (String[])new String[]{"e", "field_78770_f", "curBlockDamageMP"});
@@ -56,7 +56,7 @@ implements IResourceManagerReloadListener {
         return field;
     }
 
-    public PrettyUtilOLD() {
+    public PrettyUtil() {
         MinecraftForge.EVENT_BUS.register((Object)this);
         IResourceManager resourceManager = mc.getResourceManager();
         if (!(resourceManager instanceof IReloadableResourceManager)) {
@@ -68,7 +68,7 @@ implements IResourceManagerReloadListener {
     public void onResourceManagerReload(IResourceManager resourceManager) {
         TextureMap texturemap = mc.getTextureMapBlocks();
         for (int icon = 0; icon < DESTROY_BLOCK_ICONS.length; icon = (int)((byte)(icon + 1))) {
-            PrettyUtilOLD.DESTROY_BLOCK_ICONS[icon] = texturemap.getAtlasSprite("minecraft:blocks/destroy_stage_" + icon);
+            PrettyUtil.DESTROY_BLOCK_ICONS[icon] = texturemap.getAtlasSprite("minecraft:blocks/destroy_stage_" + icon);
         }
     }
 
@@ -76,8 +76,8 @@ implements IResourceManagerReloadListener {
     public void renderAdditionalBlockBounds(DrawBlockHighlightEvent event) {
         EntityPlayer player;
         ItemStack stack;
-        if (event.getSubID() == 0 && event.getTarget().typeOfHit == RayTraceResult.Type.BLOCK && (stack = (player = event.getPlayer()).getHeldItem(EnumHand.MAIN_HAND)) != null && stack.getItem() == GravitechItemsOLD.advancedDrill && ItemAdvancedDrill.readDrillMode(stack) == ItemAdvancedDrill.DrillMode.BIG_HOLES) {
-            PrettyUtilOLD.drawAdditionalBlockbreak(event.getContext(), player, event.getPartialTicks(), ItemAdvancedDrill.getBrokenBlocks(player, event.getTarget()));
+        if (event.getSubID() == 0 && event.getTarget().typeOfHit == RayTraceResult.Type.BLOCK && (stack = (player = event.getPlayer()).getHeldItem(EnumHand.MAIN_HAND)) != null && stack.getItem() == GravitechItems.advancedDrill && ItemAdvancedDrill.readDrillMode(stack) == ItemAdvancedDrill.DrillMode.BIG_HOLES) {
+            PrettyUtil.drawAdditionalBlockbreak(event.getContext(), player, event.getPartialTicks(), ItemAdvancedDrill.getBrokenBlocks(player, event.getTarget()));
         }
     }
 
@@ -85,8 +85,8 @@ implements IResourceManagerReloadListener {
         for (BlockPos pos : blocks) {
             context.drawSelectionBox(player, new RayTraceResult(new Vec3d(0.0, 0.0, 0.0), null, pos), 0, partialTicks);
         }
-        if (PrettyUtilOLD.mc.playerController.getIsHittingBlock()) {
-            PrettyUtilOLD.drawBlockDamageTexture((Entity)player, blocks, partialTicks);
+        if (PrettyUtil.mc.playerController.getIsHittingBlock()) {
+            PrettyUtil.drawBlockDamageTexture((Entity)player, blocks, partialTicks);
         }
     }
 
@@ -106,12 +106,12 @@ implements IResourceManagerReloadListener {
         double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)partialTicks;
         double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)partialTicks;
         double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)partialTicks;
-        int progress = (int)(PrettyUtilOLD.get_curBlockDamageMP(PrettyUtilOLD.mc.playerController) * 10.0f) - 1;
+        int progress = (int)(PrettyUtil.get_curBlockDamageMP(PrettyUtil.mc.playerController) * 10.0f) - 1;
         if (progress < 0) {
             return;
         }
         TextureAtlasSprite sprite = DESTROY_BLOCK_ICONS[progress];
-        PrettyUtilOLD.mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        PrettyUtil.mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         GlStateManager.tryBlendFuncSeparate((int)774, (int)768, (int)1, (int)0);
         GlStateManager.enableBlend();
         GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)0.5f);

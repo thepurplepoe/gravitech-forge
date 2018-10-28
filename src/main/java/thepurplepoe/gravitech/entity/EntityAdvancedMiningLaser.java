@@ -42,39 +42,35 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
 
-public class EntityAdvancedMiningLaserOLD
+public class EntityAdvancedMiningLaser
 extends Entity
 implements IThrowableEntity {
     public float range = 0.0f;
-    public float power = 0.0f;
+    public float blockPower = 0.0f;
+    public float damagePower = 0.0f;
     public int blockBreaks = 0;
-    public float blockPowerDrain = 0.0f;
     public boolean explosive = false;
-    public static double laserSpeed = 1.0f;
-    public float laserDamage = 0.0f;
+    public static double laserSpeed = 1.0;
     public EntityLivingBase owner;
     public boolean headingSet = false;
     public boolean smelt = false;
     private int ticksInAir = 0;
 
-    public EntityAdvancedMiningLaserOLD(World world) {
+    public EntityAdvancedMiningLaser(World world) {
         super(world);
         this.setSize(0.8f, 0.8f);
     }
 
-    public EntityAdvancedMiningLaserOLD(World world, Vector3 start, Vector3 dir, EntityLivingBase owner, float range, float power, int blockBreaks, boolean explosive, double speed, float blockpower, float laserdamage) {
+    public EntityAdvancedMiningLaser(World world, Vector3 start, Vector3 dir, EntityLivingBase owner, float range, float power, int blockBreaks, boolean explosive) {
         super(world);
         this.owner = owner;
         this.setSize(0.8f, 0.8f);
         this.setPosition(start.x, start.y, start.z);
-        this.setLaserHeading(dir.x, dir.y, dir.z, speed);
+        this.setLaserHeading(dir.x, dir.y, dir.z, 1.0);
         this.range = range;
         this.power = power;
         this.blockBreaks = blockBreaks;
         this.explosive = explosive;
-        laserSpeed = speed;
-        blockPowerDrain = blockpower;
-        laserDamage = laserdamage;
     }
 
     protected void entityInit() {
@@ -179,7 +175,7 @@ implements IThrowableEntity {
         }
         this.copyDataFromEvent(event);
         entity = event.hitEntity;
-        int damage = (int) (laserDamage + power);
+        int damage = (int)this.power;
         if (damage > 0) {
             entity.setFire(damage * (this.smelt ? 2 : 1));
             if (entity.attackEntityFrom(new EntityDamageSourceIndirect("arrow", (Entity)this, (Entity)this.owner).setProjectile(), (float)damage) && (this.owner instanceof EntityPlayer && entity instanceof EntityDragon && ((EntityDragon)entity).getHealth() <= 0.0f || entity instanceof MultiPartEntityPart && ((MultiPartEntityPart)entity).parent instanceof EntityDragon && ((EntityLivingBase)((MultiPartEntityPart)entity).parent).getHealth() <= 0.0f)) {
@@ -211,7 +207,7 @@ implements IThrowableEntity {
             this.setDead();
             return true;
         }
-        this.power -= (hardness / 1.5f) * blockPowerDrain;
+        this.power -= hardness / 1.5f;
         if (this.power < 0.0f) {
             return true;
         }

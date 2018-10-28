@@ -13,12 +13,12 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class ItemGeneralLappackOLD
+public abstract class ItemGeneralLappack
 extends ItemArmorElectric {
     protected final String name;
 	public String itemName;
 
-    protected ItemGeneralLappackOLD(String name, double maxCharge, double transferLimit, int tier) {
+    protected ItemGeneralLappack(String name, double maxCharge, double transferLimit, int tier) {
         super(null, null, EntityEquipmentSlot.CHEST, maxCharge, transferLimit, tier);
         this.name = name;
         itemName = name;

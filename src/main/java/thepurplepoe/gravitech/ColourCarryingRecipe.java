@@ -8,9 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-class ColourCarryingRecipeOLD
+class ColourCarryingRecipe
 extends AdvRecipe {
-    public ColourCarryingRecipeOLD(ItemStack result, Object[] args) {
+    public ColourCarryingRecipe(ItemStack result, Object[] args) {
         super(result, args);
     }
 
