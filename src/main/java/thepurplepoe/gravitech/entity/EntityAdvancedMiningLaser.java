@@ -55,6 +55,7 @@ implements IThrowableEntity {
     public boolean headingSet = false;
     public boolean smelt = false;
     private int ticksInAir = 0;
+	private float power;
 
     public EntityAdvancedMiningLaser(World world) {
         super(world);
